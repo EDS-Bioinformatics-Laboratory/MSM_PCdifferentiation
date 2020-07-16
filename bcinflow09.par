@@ -1,0 +1,904 @@
+=====================================================
+=====================================================
+General properties:
+=====================================================
+System: 0=Unix; 1=Windows:
+0
+Do checks? (0=no; 1=few; 2=yes):
+1
+Zufallsgenerator initialisieren:
+-1
+Zufallsgenerator post-proliferation initialisieren:
+0
+Angabe von Zeiten =1 (nicht Raten =0):
+1
+Was wird rausgeschrieben (0=alles; 1=wenig):
+1
+Hebe Ki67 hervor? (0=nein; 1=ja):
+0
+Mode of spatial output (0=GC 1=tumour ...):
+0
+Initial array dimension of CB:
+17000
+Initial array dimension of CC:
+14000
+Initial array dimension of TC:
+1600
+Initial array dimension of OUT:
+2000
+Initial array dimension of FDC:
+250
+Initial array dimension of STROMA:
+400
+Initial array dimension of BETA:
+0
+
+
+=====================================================
+Space properties:
+=====================================================
+Dimension of lattice:
+3
+Lattice constant of space grid:
+5.000000e+00
+Radius of GC (microm):
+1.600000e+02
+Shape of reaction volume (0=sphere; 1=cube):
+0
+length of x-axis for vol-shape>1 (micron) (2D: hor; 3D: depth):
+8.00000e+01
+length of y-axis for vol-shape>1 (micron) (2D: vert; 3D: hor):
+2.00000e+01
+length of z-axis for vol-shape>1 (micron) (3D: vert):
+1.000000e+02
+Obstacles: 0=no; 1=wall; 2=wall+slits; 3=random:
+0
+Position of wall (% of volume height):
+3.000000e-01
+Width of wall (in points):
+2
+Number of slits:
+5
+Width of slits (in points):
+1
+Density of random obstacles (% of reaction volume):
+3.000000e-01
+Clustering of obstacles (% of random obstacles per obstacle):
+3.330000e-03
+
+=====================================================
+Time and phases:
+=====================================================
+Time steps (in h):
+2.0e-03
+5.000000e-04
+Beginning time (negative tolight=0) (in h):
+0.0
+24.00000e+00
+End time (in h):
+504.0
+132.0000e+00
+Time steps between output:
+12000
+48000
+500
+12000
+125
+Stop new BC influx to GC (in h):
+96.0
+#####
+Start Mutation and Differentiation (in h):
+72.0
+Start Mutation independent of Differentiation (in h):
+2.400000e+01
+Start Output (in h):
+72.0
+
+=====================================================
+Shape space:
+=====================================================
+Dimension of Shapespace (<11):
+4
+Use metric (1:N_mutation; 2:euclidian):
+1
+Number of antibody types:
+10000
+Number per Dimension (Fixed,int-type):
+10
+Total initial Number of presented Antigen Epitops (int-type):
+1000
+Number of initial Anitgen Peaks in its Shapespace (int-type):
+1
+Fix Epitop presentation (max 10 values):
+3333
+-1
+Fraction of Ags (non-fixed Ag enter with same fraction):
+-1
+Use relative epitop weights in selection (=1):
+0
+Width of gaussian affinity weight function:
+2.800000e+00
+Amplitude of Gauss affinity weight function (0<a<=1):
+1.000000e+00
+
+=====================================================
+Signals:
+=====================================================
+Take signals from file and fix dynamics (0 or 1)
+0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Diffusion constant of differentiation signal in microm^2/h:
+2.000000e+02
+Diffusion constant of chemotaxis signal in microm^2/h:
+1.000000e+03
+Diffusion constant of soluble antibodies in microm^2/h:
+2.000000e+03
+Diffusion constant of soluble antigen in microm^2/h:
+2.000000e+03
+Diffusion constant of Semapohrin SEMA4D in microm^2/h:
+1.000000e+03
+Signal diffusion mode (0:QUANTA; 1: EULER; 2: ADI):
+2
+Objects are transparent for signals (1:yes; 0: no):
+1
+Rate of diff2CC signal production/(h FDC):
+0
+-35.0e+00
+Rate of CXCL13 production (in Mol/(h FDC)):
+1.000000e-08
+Semaphorin SEMA4D production in Mol per hour and FDC:
+-1.000000e-08
+Boundary for Differ2CC-Signal:
+0.000000e+00
+Boundary for CXCL13 (in Mol):
+0.000000e+00
+Boundary for antibodies (in Mol):
+0.000000e+00
+Boundary for antigen (in Mol):
+0.000000e+00
+Boundary of Semaphorin SEMA4D (in Mol):
+0.000000e+00
+Diffusion constant of CXCL12 (microm^2/hr):
+1.000000e+03
+Rate of CXCL12 production (Mol/(hr cell)):
+40.000000e-08
+Boundary for CXCL12 (Mol):
+0.0
+Lattice constant of signal grid (-1. for =space grid) (in microm):
+-1.000000e+00
+
+=====================================================
+Chemokines:
+=====================================================
+Maximum weight of chemokine to random polarity:
+10.000000e+00
+Steepness of weight reduction with chemokine gradient l/mol :
+1.000000e+10
+Chemokine gradient of half weight mol/l :
+2.000000e-11
+Critical CXCL12 concentration for desensitisation [Mol]:
+60.0e-10
+80.0e-10
+1.6e-10
+Critical CXCL13 concentration for desensitisation [Mol]:
+0.8e-10
+0.7e-10
+Critical CXCL12 concentration for resensitisation [Mol, -1 for none]:
+40.0e-10
+1.4e-10
+Critical CXCL13 concentration for resensitisation [Mol, -1 for none]:
+0.6e-10
+Allow exchange of cells during movement (0,1):
+1
+Set polarity with specific distributions (0:no,1:gauss,2:cyster)
+2
+
+=====================================================
+Nutrients:
+=====================================================
+Glucose consumption by viable cells (mol/sec) (in mol/sec):
+-9.500000e-17
+Oxygen consumption by viable cells (mol/sec) (in mol/sec):
+-2.000000e-17
+Glucose consumption by proliferating cells (mol/sec) (in mol/sec):
+-9.500000e-17
+Oxygen consumption by proliferating cells (mol/sec) (in mol/sec):
+-2.000000e-17
+Boundary for glucose (Mol) (in Mol):
+0.000000e+00
+Boundary for oxygen (Mol) (in Mol):
+0.000000e+00
+Diffusion constant of soluble glucose (microns^2/min) (in micron^2/min):
+4.146000e+04
+Diffusion constant of soluble oxygen (microns^2/min) (in micron^2/min):
+1.464000e+05
+Diffusion constant of glucose in tissue (microns^2/min) (in micron^2/min):
+6.300000e+03
+Diffusion constant of oxygen in tissue (microns^2/min) (in micron^2/min):
+1.050000e+05
+Critical nutrient product concentration for necrosis (Mol^2) (in Mol^2):
+2.500000e-08
+Define a constant glucose field (<0:no; >0:times resting value):
+-10
+Define a fixed glucose gradient field (0:no; 1:yes):
+0
+Define fixed glucose gradient minimum value (mM):
+2.0
+Define fixed glucose gradient minimum value (mM):
+12.0
+
+=====================================================
+antibodies:
+=====================================================
+Resolution of systemic antibodies in affinity bins (0=no systemic antibodies):
+0
+Production rate of systemic antibodies by output population (mol per hour and cell):
+1.000000e-17
+Antibody degradation half time (days):
+3.000000e+01
+Exponent of lowest affinity dissociation constant of immune complex (1/Mol):
+5.500000e+00
+Exponent of highest affinity dissociation constant of immune complex (1/Mol):
+9.5
+1.050000e+01
+Half time of plasma cell differentiation to antibody producing cell (hours):
+2.400000e+01
+Number of GC generating antibody producing plasma cells:
+1.000000e+03
+Blood volume (l):
+1.000000e-02
+Inject antibodies: concentration (mol/l; <=0 for none):
+-5.00000e-08
+Inject antibodies: time of administration (hours):
+144.0
+Inject antibodies: exponent of affinity in l/mol:
+7.100000e+00
+Inject antibodies: index in affinityspace (-1 to use exponent of affinity):
+-1
+
+=====================================================
+Cell tracking:
+=====================================================
+Total number of tracked cells (0 = use numbers for each cell type):
+0
+Number of tracked CB:
+0
+Number of tracked CC:
+0
+Number of tracked output cells:
+0
+Number of tracked TC:
+0
+Number of tracked betacells:
+0
+Tracking start time (hours):
+144.000000e+00
+Tracking end time (hours):
+154.000000e+00
+Tracking time interval (hours):
+1.666667e-01
+Number of intervals for the speed-distribution:
+100
+Width of one interval for speed-distribution (micron/min):
+1.000000e+00
+Number of intervals for the turning-angle-distribution:
+18
+Width of one interval for turning-angle-distribution (degree):
+10.0
+Number of intervals for the elongation-distribution:
+100
+Width of one interval for elongation-distribution (axis-ratio):
+1.000000e-01
+
+=====================================================
+Cell photoactivation:
+=====================================================
+Do photoactivation of cells (0=no, 1=yes):
+0
+Start photoactivation at time (hours):
+144.0
+Coordinates of the photoactivation area (x,y,z in microns):
+130
+130
+210
+Size of the photoactivation area (x,y,z in microns):
+60
+60
+30
+Use DEC205 receptors on B cells (0=no, 1=yes):
+0
+Time of setting DEC205 receptors on B cells (hours):
+30.0
+Fraction of DEC205+/+ B cells:
+1.500000e-01
+Inject anti-DEC205-OVA for BCR independent activation (0=no, 1=yes):
+0
+Time of anti-DEC205-OVA injection (hours):
+9.600000e+01
+# this is day 6 in Gabriels experiment
+Duration of anti-DEC205-OVA activity (hours, -1 for one selection):
+-24.0
+Duration of TC-BC-contact upon DEC205OVA activation (hours, 0 for unchanged):
+0.0
+Increase number of TCs upon DEC205OVA activation (factor of normal):
+1.0
+Increase number of BC divisions upon DEC205OVA activation (factor of normal):
+1.0
+Induce CB differentiation upon DEC205OVA activation (0: no; 1: yes):
+0
+Probability of CB to OUT differentiation if DEC205OVA is bound (<=0 for none):
+0.1
+Antigen acquired via DEC205 is retained (0: no; 1: yes):
+0
+
+=====================================================
+Cells generalities:
+=====================================================
+Macrophagocytosis of necrotic cells:
+9.630000e+01
+Duration for establishing adhesion binding (min):
+1.666670e-01
+
+=====================================================
+Centroblasts:
+=====================================================
+------------------------------------------------------------------------
+CB number and size
+------------------------------------------------------------------------
+Total Number of initial B-Cells:
+0
+#####
+60
+Rate of new BC flux into the GC (0=none) [# of cells/hr]:
+2.0
+#####
+Smoothness width of switch-off of new BC influx (-1=no) [hr]:
+6.0
+Centroblast radius (microm):
+2.4500000e+00
+Fix initial Centroblast position (max 10 values):
+-1
+#####
+Rate of cell growth (h):
+3.000000e+00
+
+------------------------------------------------------------------------
+CB antibody type
+------------------------------------------------------------------------
+Total Number of initial B-Cells types:
+3
+#####
+Seeder cells have a SS distance to antigen of more than (-1: no limit) [metric]:
+-1
+Seeder cells have a SS distance to antigen of less than (-1: no limit) [metric]:
+-1
+Fix initial Centroblast distribution (max 10 values):
+-1
+3653
+3545
+3455
+4436
+4373
+-1
+#####
+
+------------------------------------------------------------------------
+CB motility
+------------------------------------------------------------------------
+Duration of CXCR4 expression in hours (-1 for no downregulation):
+-6.0
+Maximum adhesion force of CB (% of full stickness):
+0.000000e+00
+Mean cell velocity (in microns/min):
+7.5
+8.000000e+00
+Persistence of CB polarity (time gap in min) (h):
+1.5
+1.2400000e+00
+Diffusion constant of CB in microm^2/h:
+-5.000000e+00
+Modus of velocity (1=random; 2=1+weights; 3=polarity-coupled; 4=adhesion):
+1
+Number of velocity states:
+1
+Persistence of v-states in min:
+-1.000000e+00
+Factor of velocity reduction from v_state max to min:
+1.000000e+00
+Surface tension as cytosol diffusion in microns^2/h:
+-5.000000e+00
+Surface tension as fragment velocity in microns/min:
+4.000000e+00
+CB elongation during active move (% of CB radius):
+1.000000e+00
+CB elongation for half maximum reshaping force (in CB radii):
+2.000000e+00
+Smoothness of CB movement (# of timesteps for dx=a move, default 1):
+1.000000e+00
+Tolerance for distance to barycenter for movement to target point in %:
+3.000000e-01
+Half tolerance at deformation of (0.01 - infty):
+1.000000e-02
+
+------------------------------------------------------------------------
+CB division
+------------------------------------------------------------------------
+Maximal distance for CB proliferation (microm):
+0.000000e+00
+Fraction of volume up to which proliferation is possible (1=no restriction):
+1.000000e+00
+Proliferation rate (h):
+9.0
+8.0
+Duration of CB cell cycle phase G1 (hours):
+2.5
+3.0
+#####
+2.0
+Duration of CB cell cycle phase S (hours):
+1.5
+#####
+1.0
+Duration of CB cell cycle phase G2 (hours):
+2.5
+3.0
+#####
+2.5
+Duration of CB cell cycle phase M (hours):
+0.5
+Duration of CB cell cycle phase G0 (hours):
+0.0
+Width of Gaussian variation of phases (fraction of average duration):
+1.0
+Number of required cell cycles before differentiation (cell cycle times) (h):
+2.0
+Mode of division number in expansion phase (0: calculate; 1: as later; 2: code specified):
+3
+#####
+Fixed number of divisions in expansion phase (chose 3 in the mode of division above):
+12
+#####
+10
+Transfer CC delay of differentiation to CB cycle time (1: yes; 0: no):
+1
+
+------------------------------------------------------------------------
+Asymmetric division of retained antigen
+------------------------------------------------------------------------
+Keep loaded antigen after BC selection for recycling (1:yes; 0: no):
+1
+Divide antigen asymmetrically on daughter BC (1: 100%; 0: no):
+0.72
+1.0
+Distribute antigen asymmetric (0.5 < polarity index < 1.0):
+1.0
+Width of smooth distribution around the polarity index [% of PI]:
+0.04
+Antigen-retaining daughter BCs differentiate to output (1: yes; 0: no):
+1
+#also set other way of output generation to zero and recycling to 100%
+Retained antigen is deleted in fresh CC (1:yes; 0:no):
+1
+CC differentiated from antigen-loaded CB directly interact with TFH (1: yes; 0: no):
+0
+Antigen pre-loaded BCs suppress mutation (1:yes; 0: as others):
+1
+BC are pre-loaded with antigen at start (-1:no; # of antigen portions):
+-1
+
+
+------------------------------------------------------------------------
+CB mutation
+------------------------------------------------------------------------
+Mutation probability:
+0.5
+Mutation probability after TC selection (-1: for unchanged; or [0..1]):
+0.0
+Mutation probability after DEC205-competent TC selection (-1: for same; [0..1]):
+-1
+Affinity-dependent mutation upon TC contact (<=0: none; affinity-exponent):
+1.0
+
+------------------------------------------------------------------------
+CB differentiation
+------------------------------------------------------------------------
+CB use receptors for signal-induced differentiation (0=no 1=ss 2=dyn):
+0
+Bound-receptor-threshold for CB-differentiation (fraction):
+5.000000e-01
+Dissociation constant for CB-differentiation signal (quanta or h):
+1.000000e+00
+Binding constant for CB-differentiation signal (h):
+1.000000e+00
+Total number of receptors on CB:
+1.000000e+00
+Rate for differentiation of centroblasts to centrocytes (h):
+0.1
+4.5
+0.5
+Smooth onset of CB differentiation (1=yes, 0=no):
+1
+Width of smooth onset of CB differentiation (hours):
+12.0
+Probability of CB to OUT differentiation (<=0 for none):
+0.0
+0.23
+Exit of OUT cells towards T zone (1: yes; 0: random walk):
+1
+
+=====================================================
+Blasts 2:
+=====================================================
+Total Number of initial blast2-Cells:
+0
+Blast2 radius (microm):
+5.000000e+00
+Maximal distance for blast2 proliferation (microm):
+1.000000e+00
+Diffusion constant of blast2 in microm^2/h:
+3.000000e+01
+Fix initial blast2 position (max 10 values):
+-1
+Blast2 proliferation (h):
+1.000000e+01
+Blast2 cell growth (h):
+1.000000e+00
+Blast2 tolerance for distance to barycenter for fragment diffusion %:
+3.000000e-01
+Blast2 half tolerance at deformation of (0.01 - infty):
+1.000000e-02
+
+=====================================================
+Centrocytes:
+=====================================================
+------------------------------------------------------------------------
+CC size
+------------------------------------------------------------------------
+Rate of cell shrinking (h):
+2.000000e+00
+
+------------------------------------------------------------------------
+CC motility
+------------------------------------------------------------------------
+Mean CC velocity (in microns/min):
+7.5
+8.000000e+00
+Diffusion constant of CC/out in microm^2/h:
+-1.500000e+01
+Persistence of CC polarity (time gap in min):
+1.5
+1.2400000e+00
+Modus of CC velocity (1=random; 2=1+weights; 3=polarity-coupled; 4=adhesion):
+1
+Number of CC velocity states:
+1
+Factor of CC velocity reduction from v_state max to min:
+1.000000e+00
+Persistence of v-states in min:
+-1.000000e+00
+Duration of CXCR5 expression in hours (-1 for until FDC-contact):
+-6.0
+
+------------------------------------------------------------------------
+CC selection at FDC
+------------------------------------------------------------------------
+CC need to see FDC before selection (1=yes, 0=no)?:
+1
+Ignore affinity when binding antigen on FDCs (-1: no; mean binding probability):
+-1.0
+Time gap between affinity tests (-1=move, in h):
+0.02
+0.05
+2.000000e-01
+Duration of motility suppression for each affinity test (-1=none, hr):
+-1
+0.03
+Rate of positive selection at FDCs (h):
+0.05
+0.1
+Probability of signalling during functional CC-FDC contact:
+1.0
+CC collect antigen by serial FDC encounters (1=yes, 0=no):
+1
+Duration of CC collection of antigen by serial FDC encounters (h):
+0.7
+2.0
+2.5
+3.0
+4.0
+2.0
+Probability to kill BCs that failed to collect antigen (-1: for always):
+-1
+Present collected Ag to TC [0=all; 1=max-specific; 2=TC specificity]:
+0
+Reset amount of collected antigen after collection-phase (antigen portions; <=0: no reset):
+-1
+
+------------------------------------------------------------------------
+Antibody feedback to antigen presentation
+------------------------------------------------------------------------
+Ag presenting Ab adapt to PC-produced Ab-quality (1=yes, 0=no)
+0
+Initial soluble Ab-affinity for antigen (0..1, -1 for seeder-affinity):
+-1
+
+------------------------------------------------------------------------
+CC selection at TFH
+------------------------------------------------------------------------
+Positive selection by TC-CC-interaction (0=no, 1=yes):
+1
+Negative selection by TC-CC-interaction (0=no, 1=yes):
+1
+Duration of TC-CC-interaction in hours:
+0.600000e+00
+Minimum duration of TC-CC-polarisation for CC-rescue in hours:
+0.500000e+00
+T-Cell-Selection probability:
+1.000000e+00
+
+------------------------------------------------------------------------
+CC differentiation to OUTPUT
+------------------------------------------------------------------------
+Rate of selected CC-differentiation (h):
+0.1
+1.0e+00
+Delay of selected CC-differentiation (hours; -1: none):
+6.0
+-1.0
+Delay of selected CC-differentiation upon DEC-binding (hours; -1: none):
+-1.0
+Output probability toward Antibody production:
+0.0
+0.4
+0.55
+2.000000e-01
+Output probability of DEC205-OVA activated BC toward Antibody production:
+0.0
+Smooth onset of differentiation to output (1=yes, 0=no):
+1
+Width of smooth onset of differentiation to output (hours):
+12.0
+Delay of differentiation to output after selection (hours; -1: none):
+-5.0
+
+----------------------------------------------------------------------
+CC: pMHC dependent division of BC induced by TFH
+----------------------------------------------------------------------
+Use pMHC-dependent TFH-induced number of divisions (0,1):
+1
+pMHC-dependent division number Hill: standard (P_0):
+2
+pMHC-dependent division number Hill: minimum (P_min):
+1.0
+pMHC-dependent division number Hill: maximum (P_max):
+6.000000e+00
+pMHC-dependent division number Hill: Hill-coefficient (n_P):
+2.000000e+00
+pMHC-dependent division number Hill: half (K_P; -1 for calc with A_0):
+9.000000e+00
+pMHC-dependent division number Hill: pMHC for 2 divisions (A_0):
+3.000000e+00
+
+----------------------------------------------------------------------
+CC apoptosis
+----------------------------------------------------------------------
+Rate of apoptosis (h):
+1.0
+10.0e+00
+Life time of FDC selected CC (hours, -1=infinite):
+-1
+3.0
+Ignore apoptotic CC in cell number analysis (0=no; 1=yes):
+0
+Motility mode of apoptotic CC (0=no; 1=CXCL13; 2=random; 3=CXCL12):
+1
+3
+Half life of CXCL12 sensitivity of apoptotic CC before random walk (hours, -1:none):
+0.0
+0.15
+Rate of macrophage transport of dead cells (h):
+6.0
+0.5
+4.000000e-02
+
+=====================================================
+OUTPUT cells
+=====================================================
+WHAT IS THIS FOR ???
+Antibody production rate in Mol per hour and output cell:
+-3.000000e-08
+Mean OUT velocity (in microns/min):
+3.0
+Persistence of OUT polarity (time gap in min):
+0.75
+1.0
+
+====================================================================
+BC class switching:
+====================================================================
+Do class switch (0=no, 1=at TFH-selection, 2=at division):
+0
+The switch matrix contains the probabilities to switch
+from class <line-number> to class <column-number> with
+Ig_classes={IgM,IgG,IgE,IgA}.
+Class switch probabilities (sum of each line must be 1):
+0.95         0.04         0.01         0.0
+0.0          1.0          0.0          0.0
+0.0          0.0          1.0          0.0
+0.0          0.0          0.0          1.0
+BCR expression level of IgE BCs (percentage of normal):
+0.3
+Cell cylce time of IgE BCs (factor; 1:as normal):
+1.0
+1.2
+Number of IgE BC divisions (factor; 1:as normal):
+1.0
+1.3
+Failure prob of IgE-CC CXCR5 upregulation (0:no; >0:CXCR5 down; <0:CXCR4 up):
+-0.75
+0.8
+0
+
+=====================================================
+T cells:
+=====================================================
+Number of initial TC:
+250
+1500
+Radius of TC in microns:
+2.500000e+00
+Tendency for TC to stay in the LZ (weight in 0..1):
+0.1
+Velocity of TC in microns/min:
+10.000000e+00
+Persistence of polarity of TC in min:
+1.700000e+00
+Velocity of TC in interaction with CC in microns/min:
+0.000000e+00
+------------------------------------------------------------------------
+TC division
+------------------------------------------------------------------------
+TC divide (0=no; 1=yes):
+0
+TC doubling time (hours, <0 for mechanistic triggering of division):
+24.0
+Duration of TC cell cycle (hours):
+10.0
+Width of Gaussian variation of cell cycle (fraction of average duration):
+0.5
+Number of required cell cycles before return to quiescence (cell cycles):
+1.0
+Maximal distance for TC proliferation (microm):
+0
+=====================================================
+Follicular dendritic cells:
+=====================================================
+Total number of FDCs:
+200
+Length of FDC arms (microm):
+40
+Fix FDC position (max 100 values):
+-1
+Percentage of FDCnetwork in GC volume:
+0.5
+6.667000e-01
+FDC dendrites treated transparent (yes=1; no=0):
+1
+FDC signal production mode (1: Vesikel; 0: continuous):
+0
+Presented Ag per FDC in units of threshold (-1: no consumption):
+3000
+5.000000e+02
+Ag distribution per FDC fragment (0: as ag_fraction; 1: 1 random Ag with prob=ag_fraction):
+0
+Ag detection on FDC fragment (0: highest affinity Ag; 1: highest Ag amount):
+0
+Ag saturation per FDC-fragment in units of threshold (1: constant binding probability):
+2.000000e+01
+Threshold Ag-concentration for binding CC (in Mol):
+1.000000e-08
+k_on for building immune complex (in /(Mol s); -1 for no binding):
+1.000000e+06
+k_off for dissociation of immune complex (in /s):
+1.000000e-03
+File-Output-Restrictions:
+-1
+
+=====================================================
+beta-cells:
+=====================================================
+Total Number of initial betacells:
+0
+betacell radius (microm):
+5.000000e+00
+betacell cell cycle (hours) (-1 for none):
+-1.000000e+00
+Maximal distance for betacell proliferation (microm):
+1.000000e+00
+betacell inverse growth rate (hours):
+1.000000e+00
+betacell inverse shrinkage rate (hours):
+1.000000e+00
+Maximum adhesion force of betacells (% of full stickness):
+0.000000e+00
+Persistence of betacell polarity (time gap in min):
+1.000000e-01
+Mean betacell velocity (in microns/min):
+100.000000e-01
+Modus of betacell velocity (1=random; 2=1+weights; 3=polarity-coupled; 4=adhesion):
+1
+Number of betacell velocity states:
+1
+Factor of betacell velocity reduction from v_state max to min:
+1.000000e+00
+Persistence of betacell v-states in min:
+-1.000000e+00
+Surface tension as betacell fragment velocity in microns/min:
+100.000000e-01
+betacell elongation during active move (% of radius):
+1.000000e+00
+betacell elongation for half maximum reshaping force (in radii):
+2.000000e+00
+betacell tolerance for distance to barycenter for movement to target point in %:
+2.000000e-01
+Half betacell tolerance at deformation of (0.01 - infty):
+2.000000e-01
+Smoothness of betacell movement (# of timesteps for dx=a move, default 1):
+1.000000e+00
+Fix initial betacell position:
+-1
+
+
+
+
+=====================================================
+Sequence space:
+=====================================================
+Use sequence space (1/0):
+0
+Type of affinity function : 0= standard (saham's)  1= normalized to max_affinity_cluster 2= sliding windows of size max_affinity_cluster:
+1
+Length of sequences:
+50
+Specifity of sequences affinity (double R):
+8
+Optimum affinity cluster size (affinity doesn't increase beyond it):
+25
+Number of Initial Antigen sequences (int-type):
+10
+Maximum Hamming distance between antigens:
+10
+Minimum Hamming distance between antigens:
+1
+Fix Antigen Sequence presentation (max 1000 values):
+01111111111111111111111111111111111111111111111111
+10111111111111111111111111111111111111111111111111
+11011111111111111111111111111111111111111111111111
+11101111111111111111111111111111111111111111111111
+11110111111111111111111111111111111111111111111111
+11111011111111111111111111111111111111111111111111
+11111101111111111111111111111111111111111111111111
+11111110111111111111111111111111111111111111111111
+11111111011111111111111111111111111111111111111111
+11111111101111111111111111111111111111111111111111
+-1
+Fix initial Repertoire distribution (max 1000 values):
+11110111011010111010101011111111111111110101010111
+-1
+#####
+Maximum Initial Hamming distance between BCRs:
+25
+Minimum affinity of initial BCRs to Antigens:
+0.001
+Maximum affinity of initial BCRs to Antigens:
+0.9
+
+Fix initial Repertoire distribution for T cells:
+11100010111001111111011110111101111110001100000011
+-1
+Maximum Initial Hamming distance between TCRs:
+25
+Minimum affinity of initial TCRs to Antigens:
+0.001
+Maximum affinity of initial TCRs to Antigens:
+0.9
+
