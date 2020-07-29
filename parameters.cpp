@@ -61,6 +61,10 @@ parameters::parameters() {
   par[Bcell_tp_stddev] = 0;
   names[BCR_pool] = "    Size of initial B-cell receptor pool    ";
   par[BCR_pool] = 100;
+  names[bcr]= "Bcr signal intensity";
+  par[bcr]= 1;
+  names[BLIMP1th]= "BLIMP1 threshlod for plasmacell differentiation";
+  par[BLIMP1th]= 8;
 
   // C
   names[c_G1] = "    Phase g1 of cell cycle (hr.)    ";
@@ -111,6 +115,8 @@ parameters::parameters() {
   par[collectionFDCperiod] = 0.7;
   names[CB_radius] = "    Centroblast radius (um)    ";
   par[CB_radius] = 2.45;
+  names[cd40]= "Cd40 signal intensity";
+  par[cd40]= 50;
 
   // D
   names[DendriteLength] =
@@ -386,6 +392,13 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
 
   names[BCR_pool] = "    Size of initial B-cell receptor pool    ";
   par[BCR_pool] = hypar.Value.totalBss;
+  
+  names[bcr]= "Bcr signal intensity";
+  par[bcr]= 1;
+    
+  names[BLIMP1th]= "BLIMP1 threshlod for plasmacell differentiation";
+  par[BLIMP1th]= 8;
+
 
   // C
   names[c_G1] = "    Phase g1 of cell cycle (hr.)    ";
@@ -454,7 +467,10 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
 
   names[CB_radius] = "    Centroblast radius (um)    ";
   par[CB_radius] = hypar.Value.CB_radius;
-
+    
+  names[cd40]= "Cd40 signal intensity";
+  par[cd40]= 50;
+  
   // D
   names[DendriteLength] =
       "    Length FDC dendrites / dx (number of positions)    ";
