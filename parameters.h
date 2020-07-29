@@ -19,6 +19,8 @@ enum {
     Bcell_tp_stddev ,
     BCR_pool,
     BCR_Length ,
+    bcr,
+    BLIMP1th,
 
 //C
     chemo_dx ,
@@ -40,6 +42,7 @@ enum {
     collectionFDCperiod ,
     Ccdif_delay_stddev ,
     CB_radius,
+    cd40,
 //D
     difDelay ,
     dimension,
