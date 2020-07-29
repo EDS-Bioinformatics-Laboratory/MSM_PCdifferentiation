@@ -504,7 +504,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                         {
                             Bcell->retained_Ag += 1.0;
                             //Elena: Note: This can be calculated once after fdc collection period (at unselected state) instead of per time step.
-                            Bcell->calcNetwork(interaction_time, 1, 0); //bcr0 > 0 means there is interaction. Intensity of interaction is to be decided.
+                            Bcell->calcNetwork(interaction_time, p.par[bcr], 0); //bcr0 > 0 means there is interaction. Intensity of bcr interaction is to be decided.
                             Bcell->can_move=true;
                             Bcell->clock=0;
                             Bcell->cell_state=unselected;
@@ -512,7 +512,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                         }
                         Bcell->isResponsive2CXCL13=false;
                         //Elena: network: If not internalized ag then calc network without signal
-                        Bcell->calcNetwork(interaction_time, 0, 0); //bcr0 = 1 means there is interaction. Intensity of interaction is to be decided.
+                        Bcell->calcNetwork(interaction_time, 0, 0); //bcr0 = 0 means there is NO interaction.
 
                         break;
                     }
@@ -587,8 +587,9 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
 
                                         //Elena: network: Calculate TF levels during TFHC-Bcell interaction.
                                         //Note: Alternatively it can be calculated after interaction.
-                                        double interaction_time = p.par[dt];
-//                                      Bcell->calcNetwork(interaction_time, 0, 50); // Elenna: network: cd40 = 50.
+                                        double interaction_time = p.par[dt];  
+                                        Bcell->calcNetwork(interaction_time, 0, Bcell->MyAffinity*p.par[cd40]);// Elena: network: CD40 proportional to affinity of Bcell [0,1]. Cd40 Parameter = 50 fed through parameter file.
+//                                      Bcell->calcNetwork(interaction_time, 0, 50); // Elena: network: fixed cd40 = 50.
                                       Bcell->calcNetwork(interaction_time, 0, Bcell->MyAffinity*50); //Elena: network: cd40 proportional to affinity of Bcell [0,1] corrected to [0,50]
 
                                         if(Bcell->TC_signal_start)//Elena: events: to record the start of TC_signal
@@ -802,7 +803,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
 // Elena: events: network: 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
 //                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
 //                            {
-//                             if(Bcell->BLIMP1 >= 8) //Elena: ADD PARAMETER!
+//                              if(Bcell->BLIMP1 >= p.par[BLIMP1th])
 //                              {
 //                                Bcell->cell_type=Plasmacell;
 //                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
@@ -821,7 +822,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
 //Elena: Plasma/Memory output: 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
                             if ( Bcell->retained_Ag > 0.)
                             {
-                                if(Bcell->BLIMP1 >= 8) //Elena: ADD PARAMETER!
+                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: ADD PARAMETER!
                                 {
                                     Bcell->cell_type=Plasmacell;
                                     Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
