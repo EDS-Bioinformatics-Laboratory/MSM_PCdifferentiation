@@ -9,6 +9,7 @@
 #include "math.h"
 #include "output.h"
 #include "mafalda.h"
+#include <algorithm>
 
 using namespace std;
 int getNewId() {
