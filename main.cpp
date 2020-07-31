@@ -14,6 +14,7 @@ string outputFolder=string();
 #endif
 #ifdef __linux__
 #include <sys/stat.h>
+#include <sys/types.h> 
 #endif
 #ifdef __APPLE__
 #include <sys/param.h>
@@ -36,10 +37,18 @@ void createFolder(string folderName) {
 
 //#Recheck
 #ifdef __linux__
-  const int dir_err = mkdir(tmp.str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-  if ((-1 == dir_err) && (errno != EEXIST)) {
-    cerr << "Error creating directory : " << tmp << endl;
-  }
+  //#Danial: Fully changed
+        string output_path = folderName;
+      struct stat info;
+      if( stat( output_path.c_str(), &info ) != 0 )
+          printf( "Output folder: cannot access %s\n", output_path.c_str() );
+      else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows
+          printf( "Output folder: already exists %s\n", output_path.c_str() );
+      else
+          {
+              const char *c = output_path.c_str();
+              mkdir(c, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+          }
 #endif
 
 #ifdef __APPLE__
