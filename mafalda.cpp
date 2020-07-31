@@ -9,6 +9,7 @@
 #include <cmath>
 #include "bcr.h"
 #include <stdlib.h>
+#include <algorithm>
 //#include "output.h"
 bool pause1 = false;
 using namespace std;
