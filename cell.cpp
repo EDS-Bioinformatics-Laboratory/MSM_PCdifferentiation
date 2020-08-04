@@ -562,8 +562,9 @@ Memory_cell::Memory_cell(parameters& p, B_cell* Bcell) : cell(Bcell), myBCR(p) {
 }
 
 //#Recheck danial: this function can be written in a much more efficient way.
+//Elena: Produces output variations with same seed runs? 
 void redo_move(vector<vector3D>& redo_list, lattice& l) {
-  
+
   int counter = int(redo_list.size()) - 1;
 
   while (counter >= 0) {
@@ -573,41 +574,17 @@ void redo_move(vector<vector3D>& redo_list, lattice& l) {
     if (c1 != NULL) {
       if (c1->cell_type == empty) {
         cout << "empty node has been selected for swaping" << endl;
-      }
-      else if (c1->cell_type == TFHC){
-          T_cell* tmp_c = (T_cell*)l.cellat(redo_list[counter]);
-                if (tmp_c->cell_state == TC_free)
+      } else if (c1->cell_type == TFHC && c1->cell_state == TC_free) {
         exchange = true;
-          tmp_c=NULL;
-          delete tmp_c;
-      }
-      else if (c1->cell_type == Centroblast) {
-          B_cell* tmp_c = (B_cell*)l.cellat(redo_list[counter]);
-                if (tmp_c->cyclestate != cycle_M)
+      } else if (c1->cell_type == Centroblast &&
+                 c1->cyclestate != cycle_M) {
         exchange = true;
-          tmp_c=NULL;
-          delete tmp_c;
-      }
-      else if (c1->cell_type == Centrocyte){
-           B_cell* tmp_c = (B_cell*)l.cellat(redo_list[counter]);
-                if (not(c1->cell_state == contact_FDC || c1->cell_state == contact_TC))
-       exchange = true;
-          tmp_c=NULL;
-          delete tmp_c;
-      }
-      else if (c1->cell_type == Plasmacell) {
-          Plasma_cell* tmp_c = (Plasma_cell*)l.cellat(redo_list[counter]);
+      } else if (c1->cell_type == Centrocyte &&
+                 not(c1->cell_state == contact_FDC || c1->cell_state == contact_TC)) {
         exchange = true;
-          tmp_c=NULL;
-          delete tmp_c;
-      }
-      else if (c1->cell_type == Memorycell){
-          Memory_cell* tmp_c = (Memory_cell*)l.cellat(redo_list[counter]);
-            exchange = true;
-            tmp_c=NULL;
-            delete tmp_c;
-      }
-          else if (c1->cell_type == border) {
+      } else if (c1->cell_type == Plasmacell || c1->cell_type == Memorycell) {
+        exchange = true;
+      } else if (c1->cell_type == border) {
         cout << "border has been selected for swaping" << endl;
       }
     }
@@ -637,7 +614,7 @@ void redo_move(vector<vector3D>& redo_list, lattice& l) {
               break;
             }
             case Centroblast: {
-                
+
               if (c2->cyclestate != cycle_M) {
                 exchange2 = true;
               }
@@ -698,6 +675,153 @@ void redo_move(vector<vector3D>& redo_list, lattice& l) {
     counter--;
   }
 }
+
+
+//Elena: Checked that it does NOT solve output variations with same seed runs. Also produces CC dynamics with dampend peack. 
+//void redo_move(vector<vector3D>& redo_list, lattice& l) {
+//
+//  int counter = int(redo_list.size()) - 1;
+//
+////    cout<<"time="<<time<<" counter="<<counter<<endl;
+////    if (counter>0)
+////    {
+////        cell* ctmp = l.cellat(redo_list[counter]);
+////        cout<<"Cell_id="<<ctmp->ID<<" type="<<ctmp->cell_type<<endl;
+////
+////    }
+//
+//  while (counter >= 0) {
+//    // check the condition of last cell in the redo list
+//    cell* c1 = l.cellat(redo_list[counter]);
+//    bool exchange = false;
+//    if (c1 != NULL) {
+//      if (c1->cell_type == empty) {
+//        cout << "empty node has been selected for swaping" << endl;
+//      }
+//      else if (c1->cell_type == TFHC){
+//          T_cell* tmp_c = (T_cell*)l.cellat(redo_list[counter]);
+//          if (tmp_c->cell_state == TC_free)
+//              exchange = true;
+//          tmp_c=NULL;
+//          delete tmp_c;
+//
+//      }
+//      else if (c1->cell_type == Centroblast)  {
+//        B_cell* tmp_c = (B_cell*)l.cellat(redo_list[counter]);
+//         if (not(tmp_c->cyclestate == cycle_M))
+//             exchange = true;
+//          tmp_c=NULL;
+//          delete tmp_c;
+//      }
+//      else if (c1->cell_type == Centrocyte){
+//          B_cell* tmp_c = (B_cell*)l.cellat(redo_list[counter]);
+//          if (not(tmp_c->cell_state == contact_FDC || tmp_c->cell_state == contact_TC))
+//              exchange = true;
+//          tmp_c=NULL;
+//          delete tmp_c;
+//      }
+//      else if (c1->cell_type == Plasmacell || c1->cell_type == Memorycell) {
+//        exchange = true;
+//      }
+//      else if (c1->cell_type == border) {
+//        cout << "border has been selected for swaping" << endl;
+//      }
+//    }
+//    // check a posible neighbour for swap
+//    bool exchange2 = false;
+//    if (exchange) {
+//      vector3D swaping_neighbour = l.get_nn_directed2(c1);
+//      if (swaping_neighbour.X != -1)  // to check if it finds a destination
+//      {
+//        if ((l.celltypeat(swaping_neighbour) == empty)&&(l.insideBorders(swaping_neighbour))) {
+////            cout<<"Empty destination in neighbourhood, why swap?"<<" Id= "<<c1->ID<<" type="<<c1->cell_type<<endl;
+//        } else {
+//          cell* c2 = l.cellat(swaping_neighbour);
+//          switch (c2->cell_type) {
+//            case FDCell: {
+//              break;
+//            }
+//            case Stromalcell: {
+//              break;
+//            }
+//            case TFHC: {
+//                T_cell* tmp_c = (T_cell*)l.cellat(swaping_neighbour);
+//              if (tmp_c->cell_state == TC_free) {
+//                exchange2 = true;
+//              tmp_c=NULL;
+//              delete tmp_c;
+//              }
+//              break;
+//            }
+//            case Centroblast: {
+//
+//                B_cell* tmp_c = (B_cell*)l.cellat(swaping_neighbour);
+//                if (not(tmp_c->cyclestate == cycle_M))
+//                    exchange = true;
+//                tmp_c=NULL;
+//                delete tmp_c;
+//              break;
+//            }
+//            case Centrocyte: {
+//                B_cell* tmp_c = (B_cell*)l.cellat(swaping_neighbour);
+//
+//              if (not(tmp_c->cell_state == contact_FDC ))
+//                  if (not(tmp_c->cell_state == contact_TC))
+//                      exchange2 = true;
+//              tmp_c=NULL;
+//              delete tmp_c;
+//              break;
+//            }
+//            case Plasmacell:
+//              exchange2 = true;
+//              break;
+//            case Memorycell:
+//              exchange2 = true;
+//              break;
+//            case border: {
+//              cout << "Swaping neighbour is border." << endl;
+//              break;
+//            }
+//            case cell_type_counter:
+//              break;
+//            default:
+//              break;
+//          }
+//
+//          // find swaping neighbour in redo list
+//          int index = -1;
+//          for (int j = 0; j <= counter; j++) {
+//            if (redo_list.at(j).X == c2->position.X)
+//              if (redo_list.at(j).Y == c2->position.Y)
+//                if (redo_list.at(j).Z == c2->position.Z)
+//                    index = j;
+//          }
+//
+//          // swap cells
+//          if ((exchange) && (exchange2) && (index > -1)) {
+//            if (getScalarproduct(c1->polarity, c2->polarity) < 1e-6) {
+//              vector3D tmp_pos = c1->position;
+//              l.removecellat(c1->position);
+//              l.removecellat(c2->position);
+//              c1->position = c2->position;
+//              l.putcellat(c1);
+//              c2->position = tmp_pos;
+//              l.putcellat(c2);
+//              //                            cout<<"succeful swap"<<endl;
+//            }
+//
+//          }
+//          if (index > -1) {
+//              redo_list.erase(redo_list.begin() + index);
+//            counter--;
+//          }
+//        }
+//      }
+//    }
+//    redo_list.pop_back();
+//    counter--;
+//  }
+//}
 
 //#Recheck danial:improvement
 B_cell* B_cell::proliferate(parameters& p, lattice& l, double time,
