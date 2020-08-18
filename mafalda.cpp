@@ -588,10 +588,12 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
 
                                         //Elena: network: Calculate TF levels during TFHC-Bcell interaction.
                                         //Note: Alternatively it can be calculated after interaction.
-                                        double interaction_time = p.par[dt];  
+                                        double interaction_time = p.par[dt];
+                                        if(1 == p.par[typeCD40signal]){
                                         Bcell->calcNetwork(interaction_time, 0, Bcell->MyAffinity*p.par[cd40]);// Elena: network: CD40 proportional to affinity of Bcell [0,1]. Cd40 Parameter = 50 fed through parameter file.
-//                                      Bcell->calcNetwork(interaction_time, 0, 50); // Elena: network: fixed cd40 = 50.
-                                      Bcell->calcNetwork(interaction_time, 0, Bcell->MyAffinity*50); //Elena: network: cd40 proportional to affinity of Bcell [0,1] corrected to [0,50]
+                                        }else{
+                                        Bcell->calcNetwork(interaction_time, 0, p.par[cd40]); // Elena: network: fixed cd40 = 50.
+                                        }
 
                                         if(Bcell->TC_signal_start)//Elena: events: to record the start of TC_signal
                                         {
