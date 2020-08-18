@@ -943,11 +943,11 @@ B_cell* B_cell::proliferate(parameters& p, lattice& l, double time,
                 retained_Ag = pitmp * all_ag;
                 daughter_Bcell->retained_Ag = all_ag - retained_Ag;
                //Elena: network: Divide TF levels assymetrically among daughter cells
-                BCL6 = pitmp*all_bcl6;
+                BCL6 = p.par[polarityBCL6]*all_bcl6;//Elena: Asymmetric division for polarityBCL6=1 (Note: tmp=1)
                 daughter_Bcell->BCL6 = all_bcl6 - BCL6;
-                IRF4 = pitmp*all_irf4;
+                IRF4 = p.par[polarityIRF4]*all_irf4;
                 daughter_Bcell->IRF4 = all_irf4 - IRF4;
-                BLIMP1 = pitmp*all_blimp1;
+                BLIMP1 = p.par[polarityBLIMP1]*all_blimp1;
                 daughter_Bcell->BLIMP1 = all_blimp1 - BLIMP1;
 
 
