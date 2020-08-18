@@ -506,6 +506,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                             Bcell->retained_Ag += 1.0;
                             //Elena: Note: This can be calculated once after fdc collection period (at unselected state) instead of per time step.
                             Bcell->calcNetwork(interaction_time, p.par[bcr], 0); //bcr0 > 0 means there is interaction. Intensity of bcr interaction is to be decided.
+                            cerr<<"bcr: "<<p.par[bcr]<<endl;
                             Bcell->can_move=true;
                             Bcell->clock=0;
                             Bcell->cell_state=unselected;

@@ -159,7 +159,7 @@ int main(int argc, char** argv){
 //    {
 //    }
 //    else {
-        parameters currentParameterSet;
+        parameters currentParameterSet(takeHyphasmaFile,parfname);
         currentParameterSet.convert_parameters();
        currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
         simulation Sim(currentParameterSet);

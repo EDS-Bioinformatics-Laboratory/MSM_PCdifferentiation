@@ -119,7 +119,7 @@ Use relative epitop weights in selection (=1):
 Width of gaussian affinity weight function:
 2.800000e+00
 Amplitude of Gauss affinity weight function (0<a<=1):
-1.000000e+00
+2.000000e+00
 
 =====================================================
 Signals:
@@ -365,7 +365,7 @@ Rate of cell growth (h):
 CB antibody type
 ------------------------------------------------------------------------
 Total Number of initial B-Cells types:
-3
+100
 #####
 Seeder cells have a SS distance to antigen of more than (-1: no limit) [metric]:
 -1
@@ -901,4 +901,15 @@ Minimum affinity of initial TCRs to Antigens:
 0.001
 Maximum affinity of initial TCRs to Antigens:
 0.9
-
+bcr signal intensity
+10
+cd40 signal intensity
+50
+BLIMP1 polarity for B cell dividing Ag Asymmetrically [0-1]
+1
+IRF4 polarity for B cell dividing Ag Asymmetrically [0-1]
+1
+BCL6 polarity for B cell dividing Ag Asymmetrically [0-1]
+1
+Type of CD40 signal model: 0-Fixed; 1-Affinnity
+1

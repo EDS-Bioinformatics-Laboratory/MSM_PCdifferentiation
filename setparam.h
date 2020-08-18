@@ -413,6 +413,15 @@ class Werte {
    // Centrocytes:
    // ============
    // Dauern
+    //Elena: Network parameters
+   double cd40;
+   double bcr;
+   double BLIMP1th;
+   double pBLIMP1;
+   double pIRF4;
+   double pBCL6;
+   double type_CD40_signal;
+    
    double CC_test_delay,CC_ICAM_delay;
    // Test with FDC necessary?
    unsigned short CC_FDC_selection;

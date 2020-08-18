@@ -94,6 +94,9 @@ enum {
     pmutAffinityExponent ,
     pDivideAgAssymetric ,
     polarityIndex ,
+    polarityBLIMP1,
+    polarityBCL6,
+    polarityIRF4,
 //R
     radius ,
     rateCBinflow ,
@@ -111,6 +114,7 @@ enum {
     tmax ,
     tolight ,
     testDelay ,
+    typeCD40signal,
 //W
     widthPI ,
 //Z
