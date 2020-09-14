@@ -349,7 +349,7 @@ Total Number of initial B-Cells:
 #####
 60
 Rate of new BC flux into the GC (0=none) [# of cells/hr]:
-0.2
+2
 #####
 Smoothness width of switch-off of new BC influx (-1=no) [hr]:
 6.0
