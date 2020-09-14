@@ -132,21 +132,23 @@ void simulation::InitialCells(lattice& l, parameters& p)
             newB_cell->speed=p.par[Bcell_speed];
             newB_cell->can_move=true;                     // A switch to turn moving on/off
             newB_cell->setMyAffinity(p);
-            newB_cell->time_of_cycle_state_switch=random::cell_cycle_time(p.par[c_G1],cycle_G1);
             newB_cell->cyclestate=cycle_G1;
-            newB_cell->position = l.getFreePosition( p.par[zoneRatioGC],1);
-            newB_cell->polarity= l.get_random_direction();
+            newB_cell->time_of_cycle_state_switch=random::cell_cycle_time(p.par[c_G1],cycle_G1);
+            newB_cell->position = l.getFreePosition( 0,1);
             if(not (l.insideBorders(newB_cell->position))) cerr<<"Cell at border position: "<<newB_cell->printcell() <<endl;
+            newB_cell->polarity= l.get_random_direction();
             l.putcellat(newB_cell);
             newB_cell->nDivisions2do = p.par[nDiv];
             newB_cell->getNewPersistentTime(p); //#Recheck, @danial: neccessary for the moment?!
+            newB_cell->myBCR.pMut= p.par[pmutAfterStartMut];//Elena: WAS MISSING!
             newB_cell->isResponsive2CXCL12=true;
             newB_cell->isResponsive2CXCL13=false;
+            l.putcellat(newB_cell);//Elena: WAS MISSING!
             ListB_cell.push_back(newB_cell);
             EventOutput->recordEvent(newB_cell, event_born,0); //Elena:  events: record event born with ID of cell to track cell history
         }
     cerr << p.par[InitialNumberCB] << " CB generated" << endl;
-
+    
 // Initialize T follicular helper cells
 /* These T cells are mobile when they are not interacting with B cells, but they don't divide*/
     for(unsigned int j = 0; j < p.par[InitialNumberTC] ; j= j+1)
@@ -804,43 +806,43 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                         
                             
 // Elena: events: network: 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
-//                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
-//                            {
-//                              if(Bcell->BLIMP1 >= p.par[BLIMP1th])
-//                              {
-//                                Bcell->cell_type=Plasmacell;
-//                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-//                                EventOutput->recordEvent(Bcell, event_become_plasma, t);//Elena: events:  record history output at become output event.
-//                               }
-//                                else
-//                                {
-//                                     Bcell->cell_type=Memorycell;
-//                                     Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
-//                                     EventOutput->recordEvent(Bcell, event_become_memory, t);
-//                                }
-//                            }
+                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
+                            {
+                              if(Bcell->BLIMP1 >= p.par[BLIMP1th])
+                              {
+                                Bcell->cell_type=Plasmacell;
+                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+                                EventOutput->recordEvent(Bcell, event_become_plasma, t);//Elena: events:  record history output at become output event.
+                               }
+                                else
+                                {
+                                     Bcell->cell_type=Memorycell;
+                                     Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
+                                     EventOutput->recordEvent(Bcell, event_become_memory, t);
+                                }
+                            }
 //Elena: events: network: End 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
 
                             
 //Elena: Plasma/Memory output: 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
-                            if ( Bcell->retained_Ag > 0.)
-                            {
-                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: ADD PARAMETER!
-                                {
-                                    Bcell->cell_type=Plasmacell;
-                                    Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-                                    EventOutput->recordEvent(Bcell, event_become_plasma, t);
-                                }
-                               else
-                                {
-                                    if (Bcell->IamHighAg)
-                                    {
-                                        Bcell->cell_type=Memorycell;
-                                        Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
-                                        EventOutput->recordEvent(Bcell, event_become_memory, t);
-                                    }
-                                }
-                            }
+//                            if ( Bcell->retained_Ag > 0.)
+//                            {
+//                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: ADD PARAMETER!
+//                                {
+//                                    Bcell->cell_type=Plasmacell;
+//                                    Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+//                                    EventOutput->recordEvent(Bcell, event_become_plasma, t);
+//                                }
+//                               else
+//                                {
+//                                    if (Bcell->IamHighAg)
+//                                    {
+//                                        Bcell->cell_type=Memorycell;
+//                                        Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
+//                                        EventOutput->recordEvent(Bcell, event_become_memory, t);
+//                                    }
+//                                }
+//                            }
 //Elena: Plasma/Memory output: End 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
                             
                             //centrocytes

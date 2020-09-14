@@ -349,7 +349,7 @@ Total Number of initial B-Cells:
 #####
 60
 Rate of new BC flux into the GC (0=none) [# of cells/hr]:
-2.0
+0.2
 #####
 Smoothness width of switch-off of new BC influx (-1=no) [hr]:
 6.0
@@ -902,7 +902,7 @@ Minimum affinity of initial TCRs to Antigens:
 Maximum affinity of initial TCRs to Antigens:
 0.9
 bcr signal intensity
-10
+1
 cd40 signal intensity
 50
 BLIMP1 polarity for B cell dividing Ag Asymmetrically [0-1]
@@ -912,4 +912,4 @@ IRF4 polarity for B cell dividing Ag Asymmetrically [0-1]
 BCL6 polarity for B cell dividing Ag Asymmetrically [0-1]
 1
 Type of CD40 signal model: 0-Fixed; 1-Affinnity
-1
+0
