@@ -912,4 +912,4 @@ IRF4 polarity for B cell dividing Ag Asymmetrically [0-1]
 BCL6 polarity for B cell dividing Ag Asymmetrically [0-1]
 1
 Type of CD40 signal model: 0-Fixed; 1-Affinnity
-0
+1

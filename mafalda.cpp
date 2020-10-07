@@ -795,7 +795,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                         if (random::randomDouble(1) < p.par[p_dif]) //recheck (there is another one, are they same?)
                         {
 
-// Elena: events: network: 1- Uncomennt if output based on Iamhigh rule.
+// Elena: events: network: 1- **** LEDA **** Uncomennt if output based on Iamhigh rule.
 //                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
 //                                                       {
 //                                                           Bcell->cell_type=Plasmacell;
@@ -805,44 +805,44 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
 // Elena: events: network: End 1- Uncomennt if output based on Iamhigh rule.
                         
                             
-// Elena: events: network: 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
-                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
-                            {
-                              if(Bcell->BLIMP1 >= p.par[BLIMP1th])
-                              {
-                                Bcell->cell_type=Plasmacell;
-                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-                                EventOutput->recordEvent(Bcell, event_become_plasma, t);//Elena: events:  record history output at become output event.
-                               }
-                                else
-                                {
-                                     Bcell->cell_type=Memorycell;
-                                     Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
-                                     EventOutput->recordEvent(Bcell, event_become_memory, t);
-                                }
-                            }
+// Elena: events: network: 2- **** Scenario 1  **** Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1. Note: Check cd40 signal.
+//                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
+//                            {
+//                              if(Bcell->BLIMP1 >= p.par[BLIMP1th])
+//                              {
+//                                Bcell->cell_type=Plasmacell;
+//                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+//                                EventOutput->recordEvent(Bcell, event_become_plasma, t);//Elena: events:  record history output at become output event.
+//                               }
+//                                else
+//                                {
+//                                     Bcell->cell_type=Memorycell;
+//                                     Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
+//                                     EventOutput->recordEvent(Bcell, event_become_memory, t);
+//                                }
+//                            }
 //Elena: events: network: End 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
 
                             
-//Elena: Plasma/Memory output: 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
-//                            if ( Bcell->retained_Ag > 0.)
-//                            {
-//                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: ADD PARAMETER!
-//                                {
-//                                    Bcell->cell_type=Plasmacell;
-//                                    Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-//                                    EventOutput->recordEvent(Bcell, event_become_plasma, t);
-//                                }
-//                               else
-//                                {
-//                                    if (Bcell->IamHighAg)
-//                                    {
-//                                        Bcell->cell_type=Memorycell;
-//                                        Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
-//                                        EventOutput->recordEvent(Bcell, event_become_memory, t);
-//                                    }
-//                                }
-//                            }
+//Elena: Plasma/Memory output: 3- **** Scenario 2  **** Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule. Note: Check cd40 signal.
+                            if ( Bcell->retained_Ag > 0.)
+                            {
+                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: ADD PARAMETER!
+                                {
+                                    Bcell->cell_type=Plasmacell;
+                                    Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+                                    EventOutput->recordEvent(Bcell, event_become_plasma, t);
+                                }
+                               else
+                                {
+                                    if (Bcell->IamHighAg)
+                                    {
+                                        Bcell->cell_type=Memorycell;
+                                        Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
+                                        EventOutput->recordEvent(Bcell, event_become_memory, t);
+                                    }
+                                }
+                            }
 //Elena: Plasma/Memory output: End 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
                             
                             //centrocytes

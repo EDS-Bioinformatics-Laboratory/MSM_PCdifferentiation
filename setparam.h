@@ -421,6 +421,8 @@ class Werte {
    double pIRF4;
    double pBCL6;
    double type_CD40_signal;
+    double dlbcl_parameters;
+    double dlbcl_derivatives;
     
    double CC_test_delay,CC_ICAM_delay;
    // Test with FDC necessary?
