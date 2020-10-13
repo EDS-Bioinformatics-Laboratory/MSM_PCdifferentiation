@@ -3,43 +3,15 @@ _In preparation_
 
 This software accompanies the publication
 
-**Multiscale modelling of germinal center plasma cell differentiation Germinal center multiscale model shows temporal switch from memory B cells to plasma cells with affinity-based CD40 signaling**. 
+**Multiscale modelling of germinal center recapitulates the temporal switch from memory B cells to plasma cells differentiation controlled by antigen affinity-based Tfh cell help.**
 
-Elena Merino1,&, Danial Lashgari1,#, Rodrigo Garcia Valiente1, Xuefeng Gao2, Fabien Crauste2,3, Olivier Grandillon2, Philip A Robert4, Michael Meyer-Hermann4, Maria Rodriguez Martinez5, Marieke van Ham6, Jeroen Guikema7, Huub Hoefsloot8, Antoine H.C. van Kampen1,8,@
-
-1 Bioinformatics Laboratory, Epidemiology and Data Science, Amsterdam Public Health research institute, Amsterdam Institute for Infection and Immunity Amsterdam, the Netherlands.
-
-2 Laboratory of Biology and Modeling of the Cell, Ecole normale supérieure de Lyon, Lyon France.
-
-3 Institute for Mathematics, University of Bordeaux, France
-
-4 Department for Systems Immunology, Helmholtz Centre for Infection Research, Inhoffenstrasse 7, 38124 Braunschweig, Germany.
-
-5 Zurich Research Laboratory, IBM, Zurich, Switzerland
-
-6 Department of Immunopathology, Division Research, Sanquin, Amsterdam
-
-7 Department of Pathology, Amsterdam Institute for Infection and Immunity Amsterdam, the Netherlands
-
-8 Biosystems Data Analysis, Swammerdam Institute for Life Sciences, University of Amsterdam, Amsterdam, the Netherlands.
-
-&co-first author
-
-@Corresponding author: 
-Antoine H.C. van Kampen
-Bioinformatics Laboratory
-Epidemiology & Data Science
-Amsterdam University Medical Centers
-Meibergdreef 9, 1105 AZ Amsterdam, the Netherlands
-a.h.vankampen@amsterdamumc.nl
-tel. +31-20-5667096
-
+Elena Merino, Danial Lashgari, Rodrigo Garcia Valiente, Xuefeng Gao, Fabien Crauste, Philip A Robert, Michael Meyer-Hermann, Maria Rodriguez Martinez, Marieke van Ham, Jeroen E.J. Guikema, Huub Hoefsloot, Antoine H.C. van Kampen
 
 # Project
 ## MSM_PCdifferentiation
 
 This repository includes code ONLY of the multiscale model of plasma cell diferentiation in Germinal Centers. The Agent-based
-model is based on Mafalda, which is based on Hyphasma (e.g., Michael-Meyer Hermann, 2012).  
+model is based on Mafalda, which is based on [Hyphasma](https://www.helmholtz-hzi.de/en/research/research-topics/immune-response/systems-immunology/our-research/) (e.g., Michael-Meyer Hermann, 2012).  
 The GRN is based on Martinez et al., 2012. It is posible to simulate 2 scenarios: Plasma cell diferentiation based on 
 Ag inheritance or on BLIMP1 level.
 
