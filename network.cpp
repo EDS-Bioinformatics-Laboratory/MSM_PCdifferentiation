@@ -37,32 +37,77 @@ network::network(): odesolver(NbVariables, NbParameters)
 
     }
 
+//Elena: set enum depending on parameter file.
 
-    void network::setBaseParameters(){
+//Elena: set network parameters depending on DLBCL enum
+    void network::setBaseParameters(parameters& p){
         params.clear();     // to make sure they are all put to zero
         params.resize(NbParameters, 0.0);
         // NOTE: Parameters in units of time in martinez are per 4 hrs. I convert them to per hr. (value / 4)
         // Elena: Note this is only set once when a Bcell is created.
-        params[Mu_p] = 1E-6 ; //M/t
-        params[Mu_b] = 2 ;//M/t //Elena: DLBCL: Uncoment to run reference model
-//        params[Mu_b] = 2 * 10 ;//M/t  //Elena: DLBCL: Uncoment to run M2 model
-        params[Mu_r] = 0.1 ;//M/t //Elena: DLBCL: Uncoment to run reference model
-//        params[Mu_r] = 0.1 *2;//M/t //Elena: DLBCL: Uncoment to run M8 model (2-fold)
-        params[sigma_p] = 9 ; //no units
-        params[sigma_b] = 100;//no units
-        params[sigma_r] = 2.6 ;//M/t //Elena: DLBCL: Uncoment to run reference model
-//        params[sigma_r] = 2.6 *2;//M/t //no units//Elena: DLBCL: Uncoment to run M8 model (2- fold) ;
-        params[l_p] = 1  ; //1/t
-        params[l_b] = 1  ; //1/t
-        params[l_r] = 1  ; //1/t
-        params[k_p] = 1 ;//M
-        params[k_b] = 1 ;//M
-        params[k_r] = 1 ;//M
-        params[init_p] = 0.1; //M
-        params[init_b] = 11.258310; //M
-        params[init_r] = 0.1; //M
-        params[bcr] = 0; //binary 0/1
-        params[cd40] = 0; //binary 0/1
+        
+        DLBCL_pars dlbcl_pars_type = (DLBCL_pars) p.par[dlbcl_parameters]; //Elena: take DLBCL_type from parameter file for parameters
+        dlbcl_pars = dlbcl_pars_type;
+        
+        DLBCL_dervs dlbcl_dervs_type = (DLBCL_dervs) p.par[dlbcl_derivatives]; //Elena: take DLBCL_type from parameter file for derivatives
+        dlbcl_dervs = dlbcl_dervs_type;
+        
+        if(dlbcl_pars_type  ==NAN ||dlbcl_pars_type < 0 || dlbcl_pars_type > (DLBCL_pars) 10 )
+            cerr<<"Error: network::setBaseParameters dlbcl_pars_types are: "<<dlbcl_pars_type <<"; Check parameters"<<endl;
+        if( dlbcl_dervs_type==NAN || dlbcl_dervs_type < 0 ||  dlbcl_dervs_type > (DLBCL_dervs) 10)
+            cerr<<"Error: network::setBaseParameters dlbcl_dervs_types are: "<<dlbcl_dervs_type <<"; Check parameters"<<endl;
+        
+        switch (dlbcl_pars)
+        {
+            case Healthy_pars:
+            {
+                params[Mu_b] = 2 ;//M/t //Elena: DLBCL: Uncomment to run reference model
+                params[Mu_r] = 0.1 ;//M/t //Elena: DLBCL: Uncomment to run reference model
+                params[sigma_r] = 2.6 ;//M/t //Elena: DLBCL: Uncomment to run reference model
+                break;
+            }
+            case M2:
+            {
+                params[Mu_b] = 2 * 10 ;//M/t  //Elena: DLBCL: Uncomment to run M2 model
+                params[Mu_r] = 0.1 ;//M/t //Elena: DLBCL: Uncomment to run reference model
+                params[sigma_r] = 2.6 ;//M/t //Elena: DLBCL: Uncomment to run reference model
+                break;
+            }
+            case M8:
+            {
+                params[Mu_b] = 2 ;//M/t //Elena: DLBCL: Uncomment to run reference model
+                params[Mu_r] = 0.1 *2;//M/t //Elena: DLBCL: Uncomment to run M8 model (2-fold)
+                params[sigma_r] = 2.6 *2;//M/t //no units//Elena: DLBCL: Uncomment to run M8 model (2- fold) ;
+                break;
+            }
+            case M2M8:
+            {
+                params[Mu_b] = 2 * 10 ;//M/t  //Elena: DLBCL: Uncomment to run M2 model
+                params[Mu_r] = 0.1 *2;//M/t //Elena: DLBCL: Uncomment to run M8 model (2-fold)
+                params[sigma_r] = 2.6 *2;//M/t //no units//Elena: DLBCL: Uncomment to run M8 model (2- fold) ;
+                break;
+            }
+            case NbModels_pars:
+            {
+                cerr<<"Error: Wrong parameter DLBCL identifyer"<<endl;
+                break;
+            }
+        }
+
+        params[sigma_p] = 9 ; //no units //Elena: DLBCL: Uncomment to run reference model
+        params[sigma_b] = 100;//no units //Elena: DLBCL: Uncomment to run reference model
+        params[Mu_p] = 1E-6 ; //M/t //Elena: DLBCL: Uncomment to run reference model
+        params[l_p] = 1  ; //1/t //Elena: DLBCL: Uncomment to run reference model
+        params[l_b] = 1  ; //1/t //Elena: DLBCL: Uncomment to run reference model
+        params[l_r] = 1  ; //1/t //Elena: DLBCL: Uncomment to run reference model
+        params[k_p] = 1 ;//M //Elena: DLBCL: Uncomment to run reference model
+        params[k_b] = 1 ;//M //Elena: DLBCL: Uncomment to run reference model
+        params[k_r] = 1 ;//M //Elena: DLBCL: Uncomment to run reference model
+        params[init_p] = 0.1; //M //Elena: DLBCL: Uncomment to run reference model
+        params[init_b] = 11.258310; //M //Elena: DLBCL: Uncomment to run reference model
+        params[init_r] = 0.1; //M //Elena: DLBCL: Uncomment to run reference model
+        params[bcr] = 0; //binary 0/1 //Elena: DLBCL: Uncomment to run reference model
+        params[cd40] = 0; //binary 0/1 //Elena: DLBCL: Uncomment to run reference model
 
         setBaseParametersDone();
     }
@@ -98,18 +143,48 @@ network::network(): odesolver(NbVariables, NbParameters)
         initialiseDone();
     }
 
+//Elena: define network derivatives depending on DLBCL enum
     void network::derivatives(const vector<double> &x, vector<double> &dxdt, const double t){
-
-                dxdt[p] 	= params[Mu_p] + params[sigma_p] * hillI(x[b], params[k_b]) + params[sigma_p] * hillA(x[r], params[k_r]) - params[l_p] * x[p]   ;
+        
+        switch(dlbcl_dervs){
+            case Healthy_dervs:{
                 
-                dxdt[b]     = params[Mu_b] + params[sigma_b] * hillI(x[p], params[k_p]) * hillI(x[b], params[k_b]) * hillI(x[r], params[k_r])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncoment to run reference model
+                dxdt[b] = params[Mu_b] + params[sigma_b] * hillI(x[p], params[k_p]) * hillI(x[b], params[k_b]) * hillI(x[r], params[k_r])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncomment to run reference model.
+                
+                dxdt[p] = params[Mu_p] + params[sigma_p] * hillI(x[b], params[k_b]) + params[sigma_p] * hillA(x[r], params[k_r]) - params[l_p] * x[p]   ; //Elena: DLBCL: Uncomment to run reference model.
+                
+                break;
+            }
+            case M1:{
+                 
+                dxdt[b] = params[Mu_b] + params[sigma_b] * hillI(x[p], params[k_p]) * hillI(x[r], params[k_r])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncomment to run M1 model where BCL6 autoinhibitory loop has been removed.
+                dxdt[p] = params[Mu_p] + params[sigma_p] * hillI(x[b], params[k_b]) + params[sigma_p] * hillA(x[r], params[k_r]) - params[l_p] * x[p]   ; //Elena: DLBCL: Uncomment to run reference model.
+                
+                break;
+            }
+            case M3A:{
+                               
+                 dxdt[b]= params[Mu_b] + params[sigma_b] * hillI(x[p], params[k_p]) * hillI(x[b], params[k_b])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncomment to run M3A model where IRF4 inhibitory effect over BCL6 has been removed.
+                dxdt[p] = params[Mu_p] + params[sigma_p] * hillI(x[b], params[k_b]) + params[sigma_p] * hillA(x[r], params[k_r]) - params[l_p] * x[p]   ; //Elena: DLBCL: Uncomment to run reference model.
+                break;
+            }
+            case M3B:{
 
-//                dxdt[b] 	= params[Mu_b] + params[sigma_b] * hillI(x[p], params[k_p]) * hillI(x[r], params[k_r])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncoment to run M1 model where BCL6 autoinhibitory loop has been removed.
+                dxdt[b]= params[Mu_b] + params[sigma_b] * hillI(x[r], params[k_r]) * hillI(x[b], params[k_b])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncomment to run M3B model where BLIMP1 inhibitory effect over BCL6 has been removed.
+                dxdt[p] = params[Mu_p] + params[sigma_p] * hillI(x[b], params[k_b]) + params[sigma_p] * hillA(x[r], params[k_r]) - params[l_p] * x[p]   ; //Elena: DLBCL: Uncomment to run reference model.
+                break;
+            }
+            case M4:{
+                
+                dxdt[b]= params[Mu_b] + params[sigma_b] * hillI(x[r], params[k_r]) * hillI(x[b], params[k_b])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncomment to run M3B model where BLIMP1 inhibitory effect over BCL6 has been removed.
+                dxdt[p] = 0  ; //Elena: DLBCL: Uncomment to run M4 model.
+                break;
+            }
+            case NbModels_dervs:{
+                cerr<<"Error:parameter DLBCL identifyer"<<endl;
+                break;
+            }
+        }
         
-//                dxdt[b]     = params[Mu_b] + params[sigma_b] * hillI(x[p], params[k_p]) * hillI(x[b], params[k_b])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncoment to run M3 model where IRF4 inhibitory effect over BCL6 has been removed.
-        
-//                dxdt[b]     = params[Mu_b] + params[sigma_b] * hillI(x[r], params[k_r]) * hillI(x[b], params[k_b])  - (params[l_b] + (params[bcr] * hillI(x[b], params[k_b]))) * x[b]  ; //Elena: DLBCL: Uncoment to run M3 model where BLIMP1 inhibitory effect over BCL6 has been removed.
-        
-        
-                dxdt[r] 	= params[Mu_r] + params[sigma_r] * (hillA(x[r], params[k_r])) + (params[cd40] * hillI(x[b], params[k_b])) - params[l_r] * x[r]   ;
-}
+        dxdt[r] = params[Mu_r] + params[sigma_r] * (hillA(x[r], params[k_r])) + (params[cd40] * hillI(x[b], params[k_b])) - params[l_r] * x[r]   ; //Elena: DLBCL: Uncomment to run reference model.
+    }

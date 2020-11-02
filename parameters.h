@@ -50,6 +50,8 @@ enum {
     dt ,
     DendriteLength ,
     DeleteAgInFreshCC ,
+    dlbcl_parameters,
+    dlbcl_derivatives,
 //E
     expMin ,
     expMax ,

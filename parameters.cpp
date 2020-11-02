@@ -133,6 +133,10 @@ parameters::parameters() {
   names[difDelay] =
       "    Delay cell differentiation after TC selection (hr.)    ";
   par[difDelay] = 6;
+    names[dlbcl_parameters] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
+    par[dlbcl_parameters] = 0;
+    names[dlbcl_derivatives] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
+    par[dlbcl_derivatives] = 0;
 
   // E
   names[expMin] = "Conversion of shape space affinity to (1/mol)";
@@ -237,19 +241,19 @@ parameters::parameters() {
   names[pApoCB] = "    % Casp3+ DZ cells per hr. used as (apoptosis rate)     ";
   par[pApoCB] = 0;
   names[p_dif] = "    Differentiation rate    ";
-//Elena: Ask Danial Why noparameter value for p_dif? (see conversion)
-  names[polarityBLIMP1]="Polarity of BLIMP1 in B-cells that divide Ag Asymmetrically [0-1]";
-  par[polarityBLIMP1]= 0.5;
-  names[polarityBCL6]="Polarity of BCL6 in B-cells that divide Ag Asymmetrically [0-1]";
-  par[polarityBCL6]=0.5;
-  names[polarityIRF4]="Polarity of IRF4 in B-cells that divide Ag Asymmetrically [0-1]";
-  par[polarityIRF4]=0.5;
+    //Elena: Ask Danial Why noparameter value for p_dif? (see conversion)
+      names[polarityBLIMP1]="Polarity of BLIMP1 in B-cells that divide Ag Asymmetrically [0-1]";
+      par[polarityBLIMP1]= 1;
+      names[polarityBCL6]="Polarity of BCL6 in B-cells that divide Ag Asymmetrically [0-1]";
+      par[polarityBCL6]=1;
+      names[polarityIRF4]="Polarity of IRF4 in B-cells that divide Ag Asymmetrically [0-1]";
+      par[polarityIRF4]=1;
 
   // R
   names[radius] = "    Lattice Radius (um)    ";
   par[radius] = 160;
   names[rateCBinflow] = "    rate of inflow (cells/hr.)    ";
-  par[rateCBinflow] = 2.0;
+    par[rateCBinflow] = 2;
 
   // S
   names[smoothnessStopCBinflow] =
@@ -280,9 +284,9 @@ parameters::parameters() {
   par[tmax] = 504;
   names[tolight] = " Rate for differentiation of centroblasts to centrocytes ";
   par[tolight] = 0.1;  // in hours, #temporary, check hyphasma
-  names[typeCD40signal]="Decisionn to run Affinity (1) or Fixed (0) CD40 signal models";
-  par[typeCD40signal]=1;
-
+    names[typeCD40signal]="Decisionn to run Affinity (1) or Fixed (0) CD40 signal models";
+    par[typeCD40signal]=1;
+    
   // W
   par[widthPI] = 0.04;
   names[widthPI] = "    Coefficient of variation arround Polarity Index    ";
@@ -401,13 +405,12 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
 
   names[BCR_pool] = "    Size of initial B-cell receptor pool    ";
   par[BCR_pool] = hypar.Value.totalBss;
-  
+    
   names[bcr]= "Bcr signal intensity";
-    par[bcr]= hypar.Value.bcr;
+  par[bcr]= 1;
     
   names[BLIMP1th]= "BLIMP1 threshlod for plasmacell differentiation";
-    par[BLIMP1th]= hypar.Value.BLIMP1th;
-
+  par[BLIMP1th]= 8;
 
   // C
   names[c_G1] = "    Phase g1 of cell cycle (hr.)    ";
@@ -478,8 +481,8 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
   par[CB_radius] = hypar.Value.CB_radius;
     
   names[cd40]= "Cd40 signal intensity";
-    par[cd40]= hypar.Value.cd40;
-  
+  par[cd40]= 50;
+
   // D
   names[DendriteLength] =
       "    Length FDC dendrites / dx (number of positions)    ";
@@ -500,6 +503,12 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
   names[difDelay] =
       "    Delay cell differentiation after TC selection (hr.)    ";
   par[difDelay] = hypar.Value.ccdiff_delay;
+   
+    names[dlbcl_parameters] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
+       par[dlbcl_parameters] = hypar.Value.dlbcl_parameters; //Elena: See network.h for explanation of differenntt GRN models.
+
+     names[dlbcl_derivatives] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
+       par[dlbcl_derivatives] = hypar.Value.dlbcl_derivatives; //Elena: See network.h for explanation of differenntt GRN models.
 
   // E
   names[expMin] = "Conversion of shape space affinity to (1/mol)";
@@ -633,10 +642,9 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
 
   names[pApoCB] = "    % Casp3+ DZ cells per hr. used as (apoptosis rate)     ";
   par[pApoCB] = 0;
-    
-  //Elena: Ask Danial Why noparameter value for p_dif? (see conversion)
+
   names[p_dif] = "    Differentiation rate    ";
-    
+
     names[polarityBLIMP1]="Polarity of BLIMP1 in B-cells that divide Ag Asymmetrically [0-1]";
     par[polarityBLIMP1]= hypar.Value.pBLIMP1;
     
@@ -645,7 +653,7 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
     
     names[polarityIRF4]="Polarity of IRF4 in B-cells that divide Ag Asymmetrically [0-1]";
     par[polarityIRF4]=hypar.Value.pIRF4;
-
+    
   // R
   names[radius] = "    Lattice Radius (um)    ";
   par[radius] = hypar.Value.GC_radius;
@@ -693,14 +701,12 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
   names[tolight] = " Rate for differentiation of centroblasts to centrocytes ";
   par[tolight] = hypar.Value.tolight;
     
-  names[typeCD40signal]="Decision to run Affinity (1) or Fixed (0) CD40 signal models";
-  par[typeCD40signal]=hypar.Value.type_CD40_signal;
+    names[typeCD40signal]="Decision to run Affinity (1) or Fixed (0) CD40 signal models";
+    par[typeCD40signal]=hypar.Value.type_CD40_signal;
 
   // W
   names[widthPI] = "    Coefficient of variation arround Polarity Index    ";
   par[widthPI] = hypar.Value.smooth_PI;
-    
-    
 
   // Z
   names[zoneRatioGC] =
@@ -739,7 +745,7 @@ void parameters::convert_parameters() {
       par[Tcell_tp] = 1.;
   }
 
-  par[p_dif] =//Elena: 1/par[tolight] should be in linkHyphasmaMafalda! this is only conversion!
+  par[p_dif] =
     (1 / par[tolight]) * par[dt];  // #temporary make it specific for cc and cb
 
   par[chemosteep] = par[chemosteep] / (par[dx] * par[dx] * par[dx] * 1.e-15 *

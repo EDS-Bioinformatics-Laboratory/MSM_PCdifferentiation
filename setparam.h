@@ -409,21 +409,21 @@ class Werte {
    double blast2_distance_tolerance,blast2_half_tolerance_deformation;
    // Diffusion
    double D_blast2;
+    
+    //Elena: Network parameters
+    double cd40;
+    double bcr;
+    double BLIMP1th;
+    double pBLIMP1;
+    double pIRF4;
+    double pBCL6;
+    double type_CD40_signal;
+    double dlbcl_parameters;
+    double dlbcl_derivatives;
 
    // Centrocytes:
    // ============
    // Dauern
-    //Elena: Network parameters
-   double cd40;
-   double bcr;
-   double BLIMP1th;
-   double pBLIMP1;
-   double pIRF4;
-   double pBCL6;
-   double type_CD40_signal;
-    double dlbcl_parameters;
-    double dlbcl_derivatives;
-    
    double CC_test_delay,CC_ICAM_delay;
    // Test with FDC necessary?
    unsigned short CC_FDC_selection;

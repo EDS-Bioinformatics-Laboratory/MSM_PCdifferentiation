@@ -14,7 +14,6 @@ string outputFolder=string();
 #endif
 #ifdef __linux__
 #include <sys/stat.h>
-#include <sys/types.h> 
 #endif
 #ifdef __APPLE__
 #include <sys/param.h>
@@ -37,18 +36,10 @@ void createFolder(string folderName) {
 
 //#Recheck
 #ifdef __linux__
-  //#Danial: Fully changed
-        string output_path = folderName;
-      struct stat info;
-      if( stat( output_path.c_str(), &info ) != 0 )
-          printf( "Output folder: cannot access %s\n", output_path.c_str() );
-      else if( info.st_mode & S_IFDIR )  // S_ISDIR() doesn't exist on my windows
-          printf( "Output folder: already exists %s\n", output_path.c_str() );
-      else
-          {
-              const char *c = output_path.c_str();
-              mkdir(c, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-          }
+  const int dir_err = mkdir(tmp.str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+  if ((-1 == dir_err) && (errno != EEXIST)) {
+    cerr << "Error creating directory : " << tmp << endl;
+  }
 #endif
 
 #ifdef __APPLE__
@@ -153,20 +144,36 @@ int main(int argc, char** argv){
     createFolder(outputFolder);
 
 
-// Print all parameters that is used to analyze file
-// Create simulation instance
-//    if (Nof_simulations > 1) //Elena: Why not define this from script?
-//    {
-//    }
-//    else {
-        parameters currentParameterSet(takeHyphasmaFile,parfname);
-        currentParameterSet.convert_parameters();
-       currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
-        simulation Sim(currentParameterSet);
-//        Sim.Simulation_ID=Nof_simulations;
-//        initGC3D(argc, argv);
-        Sim.simulate(*Sim.currentLattice, currentParameterSet);
-//    }
+//// Print all parameters that is used to analyze file
+//// Create simulation instance
+////    if (Nof_simulations > 1) //Elena: Why not define this from script?
+////    {
+////    }
+////    else {
+//        parameters currentParameterSet;
+//        currentParameterSet.convert_parameters();
+//       currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
+//        simulation Sim(currentParameterSet);
+////        Sim.Simulation_ID=Nof_simulations;
+////        initGC3D(argc, argv);
+//        Sim.simulate(*Sim.currentLattice, currentParameterSet);
+////    }
+    
+    // Print all parameters that is used to analyze file
+    // Create simulation instance
+    //    if (Nof_simulations > 1) //Elena: Why not define this from script?
+    //    {
+    //    }
+    //    else {
+            parameters currentParameterSet(takeHyphasmaFile,parfname);
+            currentParameterSet.convert_parameters();
+           currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
+            simulation Sim(currentParameterSet);
+    //        Sim.Simulation_ID=Nof_simulations;
+    //        initGC3D(argc, argv);
+            Sim.simulate(*Sim.currentLattice, currentParameterSet);
+    //    }
+    
     cout << "Starting OpenGL " << endl;
     
     //#check

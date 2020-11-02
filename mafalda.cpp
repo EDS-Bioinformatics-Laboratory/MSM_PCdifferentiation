@@ -9,7 +9,6 @@
 #include <cmath>
 #include "bcr.h"
 #include <stdlib.h>
-#include <algorithm>
 //#include "output.h"
 bool pause1 = false;
 using namespace std;
@@ -17,6 +16,7 @@ using namespace std;
 simulation::simulation(parameters &p)
 {
     currentOutput = new output();
+    //Elena: events
     EventOutput = new events(outputFolder,"/historyOut.txt", "/historyDead.txt");
 //    currentOutput->Output_ID=Simulation_ID; //Elena: This should go after defining Simulation_ID in main.cpp!
     currentLattice = new lattice(p, outputFolder,"/../cxcl12_3d_5micron.sig","/../cxcl13_3d_5micron.sig"); //Elena: path relative to exec file...Works for Mac but maybe not for other systems.
@@ -132,11 +132,11 @@ void simulation::InitialCells(lattice& l, parameters& p)
             newB_cell->speed=p.par[Bcell_speed];
             newB_cell->can_move=true;                     // A switch to turn moving on/off
             newB_cell->setMyAffinity(p);
-            newB_cell->cyclestate=cycle_G1;
             newB_cell->time_of_cycle_state_switch=random::cell_cycle_time(p.par[c_G1],cycle_G1);
-            newB_cell->position = l.getFreePosition( 0,1);
-            if(not (l.insideBorders(newB_cell->position))) cerr<<"Cell at border position: "<<newB_cell->printcell() <<endl;
+            newB_cell->cyclestate=cycle_G1;
+            newB_cell->position = l.getFreePosition( p.par[zoneRatioGC],1);
             newB_cell->polarity= l.get_random_direction();
+            if(not (l.insideBorders(newB_cell->position))) cerr<<"Cell at border position: "<<newB_cell->printcell() <<endl;
             l.putcellat(newB_cell);
             newB_cell->nDivisions2do = p.par[nDiv];
             newB_cell->getNewPersistentTime(p); //#Recheck, @danial: neccessary for the moment?!
@@ -148,7 +148,7 @@ void simulation::InitialCells(lattice& l, parameters& p)
             EventOutput->recordEvent(newB_cell, event_born,0); //Elena:  events: record event born with ID of cell to track cell history
         }
     cerr << p.par[InitialNumberCB] << " CB generated" << endl;
-    
+
 // Initialize T follicular helper cells
 /* These T cells are mobile when they are not interacting with B cells, but they don't divide*/
     for(unsigned int j = 0; j < p.par[InitialNumberTC] ; j= j+1)
@@ -421,7 +421,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                             if (Bcell->retained_Ag <= 0)
                             {
                                 Bcell->cell_state = apoptosis;
-                                EventOutput->recordEvent(Bcell, event_die, t); //Elena:  events: record event die with ID of cell to track cell history
+                                EventOutput->recordEvent(Bcell, event_die, t); //Elena: events: record event die with ID of cell to track cell history
                                 Bcell->isResponsive2CXCL12=false;
                                 Bcell->isResponsive2CXCL13=true;
                             }
@@ -506,7 +506,6 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                         if (random::randomDouble(1) < p.par[pSel])
                         {
                             Bcell->retained_Ag += 1.0;
-                            //Elena: Note: This can be calculated once after fdc collection period (at unselected state) instead of per time step.
                             Bcell->calcNetwork(interaction_time, p.par[bcr], 0); //bcr0 > 0 means there is interaction. Intensity of bcr interaction is to be decided.
                             Bcell->can_move=true;
                             Bcell->clock=0;
@@ -592,11 +591,12 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                                         //Note: Alternatively it can be calculated after interaction.
                                         double interaction_time = p.par[dt];
                                         if(1 == p.par[typeCD40signal]){
-                                        Bcell->calcNetwork(interaction_time, 0, Bcell->MyAffinity*p.par[cd40]);// Elena: network: CD40 proportional to affinity of Bcell [0,1]. Cd40 Parameter = 50 fed through parameter file.
-                                        }else{
-                                        Bcell->calcNetwork(interaction_time, 0, p.par[cd40]); // Elena: network: fixed cd40 = 50.
-                                        }
-
+                                            Bcell->calcNetwork(interaction_time, 0, Bcell->MyAffinity*p.par[cd40]);// Elena: network: CD40 proportional to affinity of Bcell [0,1]. Cd40 Parameter = 50 fed through parameter file.
+                                            }else{
+                                            Bcell->calcNetwork(interaction_time, 0, p.par[cd40]); // Elena: network: fixed cd40 = 50.
+                                                
+                                            }
+                                        
                                         if(Bcell->TC_signal_start)//Elena: events: to record the start of TC_signal
                                         {
                                         EventOutput->recordEvent(Bcell, event_start_signaling_TC, t);//Elena: events: record history output at start of signalling TC state.
@@ -634,9 +634,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                             {
                                 ndivtmp=Bcell->pMHC_dependent_number_of_divisions;
                             }
-
                             Bcell->nDivisions2do= int(ndivtmp);
-
                             ndivtmp -= double(Bcell->nDivisions2do);
                             if (random::randomDouble(1) < ndivtmp)
                             {
@@ -647,7 +645,6 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                                 Bcell->nDivisions2do=12;
                             }
                             
-
                             Bcell->cell_state= TC_selected;
                             //Elena: network: events: stop signal
                             EventOutput->recordEvent(Bcell, event_stop_signaling_TC, t);//Elena: events: record history output at stop signalling TC event
@@ -689,9 +686,6 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                     {
                         Bcell->isResponsive2CXCL13=false;
                         Bcell->TC_selected_clock += p.par[dt];
-                        
-                        Bcell->Recycling_divisions = Bcell->nDivisions2do; //Elena: lymphoma: record nDivisions of recycling CCs
-                        
                         if (Bcell->TC_selected_clock > Bcell->Recycling_delay)
                         {
                             if (random::randomDouble(1)< p.par[p_dif]) //Recheck (there is another one, are they same?)
@@ -716,7 +710,6 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                                 
                                 //#recheck
 //                                Bcell->myBCR.pMut= p.par[pmutAfterStartMut] + double ((0. - p.par[pmutAfterStartMut]) * pow(Bcell->MyAffinity,p.par[pmutAffinityExponent]));
-                                
                                 
                                 Bcell->cyclestate=cycle_G1;
                                 Bcell->transmit_CCdelay2cycle(p);
@@ -778,7 +771,6 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                     // #Sequential After finishing the cell cycle B cell divides in same time step
                     if (Bcell->cyclestate==cycle_Divide)
                     {
-//                        cerr<<Bcell->nDivisions2do<<"Divisions to do"<<endl;
                         EventOutput->recordEvent(Bcell, event_divide, t); //Elena: events: record history output at division state.
                         B_cell* daughterBcell = Bcell->proliferate(p,l,t,ListB_cell,*currentOutput,*this);
                         if(daughterBcell)
@@ -794,21 +786,19 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                     {
                         if (random::randomDouble(1) < p.par[p_dif]) //recheck (there is another one, are they same?)
                         {
-
-// Elena: events: network: 1- **** LEDA **** Uncomennt if output based on Iamhigh rule.
+//Elena: network:
+//                          Elena: events: network: 1- Uncomennt if output based on Iamhigh rule.
 //                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
 //                                                       {
 //                                                           Bcell->cell_type=Plasmacell;
 //                                                           Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
 //                                                           EventOutput->recordEvent(Bcell, event_become_out, t);//Elena: events:  record history output at become output event.
 //                                                       }
-// Elena: events: network: End 1- Uncomennt if output based on Iamhigh rule.
                         
-                            
-// Elena: events: network: 2- **** Scenario 1  **** Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1. Note: Check cd40 signal.
+//                          Elena: events: network: 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
 //                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
 //                            {
-//                              if(Bcell->BLIMP1 >= p.par[BLIMP1th])
+//                             if(Bcell->BLIMP1 >= p.par[BLIMP1th])
 //                              {
 //                                Bcell->cell_type=Plasmacell;
 //                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
@@ -821,13 +811,11 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
 //                                     EventOutput->recordEvent(Bcell, event_become_memory, t);
 //                                }
 //                            }
-//Elena: events: network: End 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
-
-                            
-//Elena: Plasma/Memory output: 3- **** Scenario 2  **** Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule. Note: Check cd40 signal.
+//Elena: network:
+                             //Elena: Plasma/Memory output: 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
                             if ( Bcell->retained_Ag > 0.)
                             {
-                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: ADD PARAMETER!
+                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: network parameter defined in parameterfile.
                                 {
                                     Bcell->cell_type=Plasmacell;
                                     Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
@@ -843,8 +831,7 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                                     }
                                 }
                             }
-//Elena: Plasma/Memory output: End 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
-                            
+
                             //centrocytes
                                     else
                                         {

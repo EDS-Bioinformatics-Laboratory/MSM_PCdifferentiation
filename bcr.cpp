@@ -24,17 +24,17 @@ void initialize_Seeds (parameters &p)
         {
             Shape_Space_Seeder[j][i]=random::randomInteger(p.par[Nmax]+1); // default: Nmax is 9 --> each digit is between 0-9 so we use random(10) to include 9 itself.
         }
-//        for ( int i = 0, inc = 1; i < p.par[BCR_Length]; ++inc, i += inc )
-//        {
-//        cout << i << endl;
-//            Shape_Space_Seeder[j][i]=5;
-//        }
+//    for ( int i = 0, inc = 1; i < p.par[BCR_Length]; ++inc, i += inc )
+//    {
+//        Shape_Space_Seeder[j][i]=5;
+//    }
 //        for ( int i = 1, inc = 1; i < p.par[BCR_Length]; ++inc, i += inc )
-//        {
-//        cout << i << endl;
-//            Shape_Space_Seeder[j][i]=4;
-//        }
+//          {
+//              Shape_Space_Seeder[j][i]=4;
+//          }
     }
+    
+
 }
 
 //#Recheck danial: This can get improved

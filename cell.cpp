@@ -9,7 +9,6 @@
 #include "math.h"
 #include "output.h"
 #include "mafalda.h"
-#include <algorithm>
 
 using namespace std;
 int getNewId() {
@@ -190,7 +189,6 @@ B_cell::B_cell(parameters& p)
     interactingTC = NULL;
     cyclestate = cycle_Ncellstates;
     nDivisions2do = 0.;
-    Recycling_divisions= 0.; //Elena: lymphoma: 
     delta_Affinity = 0.0;
     TCsignalDuration = 0.;  // Acumulated signal from currently interacting TC (in
     fdc_interaction_time_history = 0.0;
@@ -200,7 +198,7 @@ B_cell::B_cell(parameters& p)
     isResponsive2CXCL12=false;
     isResponsive2CXCL13=false;
 
-    Bcell_network.setBaseParameters(); //Elena: network: Set parameters in network using parameters defined inside network class (not from file).
+    Bcell_network.setBaseParameters(p); //Elena: network: Set parameters in network using parameters defined inside network class (not from file).
     Bcell_network.initialise();//Elena: network: Set initial TF levels in init vector in network
     setBcellTFs(); //Elena: network: Puts TF levels from init vector (in network) inside Bcell TFs (field)
     TC_signal_start = true; //Elena: network: counter inside cell to record Tcell signal only at the start
@@ -238,8 +236,6 @@ B_cell::B_cell(parameters& p, B_cell* Mom):cell(Mom), myBCR(p) {
     Selected_by_TC = false;
     delta_Affinity = 0.0;
     nDivisions2do = Mom->nDivisions2do;
-    
-    Recycling_divisions= 0.;//Elena: lymphoma:
     TCsignalDuration = 0.;  // Acumulated signal from currently interacting TC (in
     // sec).(As imput to ODE)
     IamHighAg = false;
@@ -250,7 +246,7 @@ B_cell::B_cell(parameters& p, B_cell* Mom):cell(Mom), myBCR(p) {
     Tc_interaction_history.second = 0.0;
     fdc_interaction_time_history = 0.0;
 
-    Bcell_network.setBaseParameters(); //Elena: network: Set parameters in network using parameters defined inside network class (not from file).
+    Bcell_network.setBaseParameters(p); //Elena: network: Set parameters in network using parameters defined inside network class (not from file).
     Bcell_network.initialise();//Elena: network: Set initial TF levels in init vector in network
     setBcellTFs(); //Elena: network: Puts TF levels from init vector (in network) inside Bcell TFs (field)
     TC_signal_start = true; //Elena: network: counter inside cell to record Tcell signal only at the start
@@ -515,6 +511,7 @@ Plasma_cell::Plasma_cell(parameters& p, B_cell* Bcell) : cell(Bcell), myBCR(p) {
   retained_Ag = Bcell->retained_Ag;
   total_number_of_divisions = Bcell->total_number_of_divisions;
   delta_Affinity = Bcell->delta_Affinity;
+    //Elena: network copy TFs from Bcell to Pcell
   BCL6 = Bcell->BCL6;
   IRF4 = Bcell->IRF4;
   BLIMP1 = Bcell->BLIMP1;
@@ -556,13 +553,13 @@ Memory_cell::Memory_cell(parameters& p, B_cell* Bcell) : cell(Bcell), myBCR(p) {
     retained_Ag = Bcell->retained_Ag;
     total_number_of_divisions = Bcell->total_number_of_divisions;
     delta_Affinity = Bcell->delta_Affinity;
+    //Elena: network copy TFs from Bcell to Pcell
     BCL6 = Bcell->BCL6;
     IRF4 = Bcell->IRF4;
     BLIMP1 = Bcell->BLIMP1;
 }
 
 //#Recheck danial: this function can be written in a much more efficient way.
-//Elena: Produces output variations with same seed runs? 
 void redo_move(vector<vector3D>& redo_list, lattice& l) {
 
   int counter = int(redo_list.size()) - 1;
@@ -677,7 +674,7 @@ void redo_move(vector<vector3D>& redo_list, lattice& l) {
 }
 
 
-//Elena: Checked that it does NOT solve output variations with same seed runs. Also produces CC dynamics with dampend peack. 
+//Elena: Check if function works(CC dynamics weird...?)
 //void redo_move(vector<vector3D>& redo_list, lattice& l) {
 //
 //  int counter = int(redo_list.size()) - 1;
@@ -823,6 +820,7 @@ void redo_move(vector<vector3D>& redo_list, lattice& l) {
 //  }
 //}
 
+
 //#Recheck danial:improvement
 B_cell* B_cell::proliferate(parameters& p, lattice& l, double time,
                             vector<B_cell*>& ListB_cell, output& currentoutput,
@@ -912,7 +910,7 @@ B_cell* B_cell::proliferate(parameters& p, lattice& l, double time,
                 }
             }
 
-            //Elena: network: Calculate TF levels of B cells before division using time since they were selected by FDCs.
+          
             double all_bcl6 = BCL6;
             double all_irf4 = IRF4;
             double all_blimp1 = BLIMP1;
@@ -942,22 +940,29 @@ B_cell* B_cell::proliferate(parameters& p, lattice& l, double time,
                 pitmp = tmp;
                 retained_Ag = pitmp * all_ag;
                 daughter_Bcell->retained_Ag = all_ag - retained_Ag;
-               //Elena: network: Divide TF levels assymetrically among daughter cells
-                BCL6 = p.par[polarityBCL6]*all_bcl6;//Elena: Asymmetric division for polarityBCL6=1 (Note: tmp=1)
-                daughter_Bcell->BCL6 = all_bcl6 - BCL6;
-                IRF4 = p.par[polarityIRF4]*all_irf4;
-                daughter_Bcell->IRF4 = all_irf4 - IRF4;
-                BLIMP1 = p.par[polarityBLIMP1]*all_blimp1;
-                daughter_Bcell->BLIMP1 = all_blimp1 - BLIMP1;
+//               //Elena: network: Divide TF levels assymetrically among daughter cells
+//                BCL6 = pitmp*all_bcl6;
+//                daughter_Bcell->BCL6 = all_bcl6 - BCL6;
+//                IRF4 = pitmp*all_irf4;
+//                daughter_Bcell->IRF4 = all_irf4 - IRF4;
+//                BLIMP1 = pitmp*all_blimp1;
+//                daughter_Bcell->BLIMP1 = all_blimp1 - BLIMP1;
+                
+                //Elena: network: Divide TF levels acordinnng to polarity parameters among daughter cells
+                               BCL6 = p.par[polarityBCL6]*all_bcl6;//Elena: Asymmetric division for polarityBCL6=1 (Note: tmp=1)
+                               daughter_Bcell->BCL6 = all_bcl6 - BCL6;
+                               IRF4 = p.par[polarityIRF4]*all_irf4;
+                               daughter_Bcell->IRF4 = all_irf4 - IRF4;
+                               BLIMP1 = p.par[polarityBLIMP1]*all_blimp1;
+                               daughter_Bcell->BLIMP1 = all_blimp1 - BLIMP1;
 
 
             } else {
                 double all_ag = retained_Ag;
                 daughter_Bcell->retained_Ag = double(all_ag / 2);
                 retained_Ag = double(all_ag / 2);
-                IamHighAg = false; //Elena: Ask danial if this is as in hyphasma...? recycled CCs that divide symetricaly wont produce output cells?
-                                    // I unnderstud from the algorythm that if dividion is symetric at least one dauguter cell will get IamAghigh = true...
-                daughter_Bcell->IamHighAg = false; //ELENA: TESTING ABOVE THEORY : Are CCs that recycled output or are CBs that recycled and divide assymetrically output?
+                IamHighAg = false;
+                daughter_Bcell->IamHighAg = false;
                 //Elena: network: Divide TF levels symetrically among daughter cells
                 BCL6 = all_bcl6/2;
                 daughter_Bcell->BCL6 = all_bcl6 - BCL6;

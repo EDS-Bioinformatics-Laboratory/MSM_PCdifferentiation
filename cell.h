@@ -83,7 +83,6 @@ public:
     T_cell* interactingTC; // ID of T cell with who Bcell is interacting.
     CellCycleState cyclestate;
     int nDivisions2do; //Number of divisions left for cell to do
-    int Recycling_divisions;  //Elena: lymphoma: nDivisions of recycling CCs
     double delta_Affinity;
     double TCsignalDuration; // Acumulated signal from currently interacting TC (in sec).(As imput to ODE)
     double fdc_interaction_time_history;
