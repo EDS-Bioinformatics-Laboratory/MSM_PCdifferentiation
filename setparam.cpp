@@ -2745,12 +2745,43 @@ const char* Werte::kenntext(int nummer) {
      return "Hill-coefficient of pMHC-dependent FoxO deflection [#] (nFoxO):";
    }
      break;
-
-
-
-
-
-
+           //Elena: New Parameters
+       case 402: {
+         return "bcr signal intensity";
+       }
+         break;
+       case 403: {
+         return "cd40 signal intensity";
+       }
+         break;
+       case 404: {
+         return "BLIMP1 threshold";
+       }
+         break;
+       case 405: {
+         return "BLIMP1 polarity for B cell dividing Ag Asymmetrically [0-1]";
+       }
+         break;
+       case 406: {
+         return "IRF4 polarity for B cell dividing Ag Asymmetrically [0-1]";
+       }
+         break;
+       case 407: {
+         return "BCL6 polarity for B cell dividing Ag Asymmetrically [0-1]";
+       }
+         break;
+       case 408: {
+         return "Type of CD40 signal model: 0-Fixed; 1-Affinnity";
+       }
+         break;
+       case 409: {
+         return "dlbcl parameters (Helathy, M2, M8, M2M8)";
+       }
+         break;
+       case 410: {
+         return "dlbcl derivatives (Helathy, M1, M3A, M3B,,M4)";
+       }
+         break;
 
    }
    return "error";
@@ -3205,6 +3236,18 @@ ofstream&Werte::fPut(ofstream &s) {
    s << kenntext(399) << ":\n" << KFoxO << "\n";
    s << kenntext(400) << ":\n" << nFoxO << "\n";
    s << kenntext(401) << ":\n" << dT_mTORC1 << "\n";
+    
+    //Elenna: new parameters
+    
+    s << kenntext(402) << ":\n" << bcr << "\n";
+    s << kenntext(403) << ":\n" << cd40 << "\n";
+    s << kenntext(404) << ":\n" << BLIMP1th << "\n";
+    s << kenntext(405) << ":\n" << pBLIMP1 << "\n";
+    s << kenntext(406) << ":\n" << pIRF4   << "\n";
+    s << kenntext(407) << ":\n" << pBCL6 << "\n";
+    s << kenntext(408) << ":\n" << type_CD40_signal << "\n";
+    s << kenntext(409) << ":\n" << dlbcl_parameters << "\n";
+    s << kenntext(410) << ":\n" << dlbcl_derivatives << "\n";
 
    s << kenntext(360) << ":\n" << multipleTFHcontacts << "\n";
    s << kenntext(233) << ":\n" << negativeTCselection << "\n";
@@ -4096,9 +4139,36 @@ void Werte::fGet(char * parname, bool transform2rate) {
    if (fFind(parname, s, 401) == 1) {
      s >> dT_mTORC1;
    }
-
-
-
+    //Elena: new parameters
+    if (fFind(parname, s, 402) == 1) {
+      s >> bcr;
+    }
+    if (fFind(parname, s, 403) == 1) {
+      s >> cd40;
+    }
+    if (fFind(parname, s, 404) == 1) {
+        s >> BLIMP1th;
+      }
+    if (fFind(parname, s, 405) == 1) {
+      s >> pBLIMP1;
+    }
+    if (fFind(parname, s, 406) == 1) {
+      s >> pIRF4;
+    }
+    if (fFind(parname, s, 407) == 1) {
+      s >> pBCL6;
+    }
+    if (fFind(parname, s, 408) == 1) {
+      s >> type_CD40_signal;
+    }
+    if (fFind(parname, s, 409) == 1) {
+      s >> dlbcl_derivatives;
+    }
+    if (fFind(parname, s, 410) == 1) {
+      s >> dlbcl_parameters;
+    }
+    
+    
    if (fFind(parname, s, 360) == 1) {
       s >> multipleTFHcontacts;
    }

@@ -506,7 +506,7 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
    
     names[dlbcl_parameters] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
        par[dlbcl_parameters] = hypar.Value.dlbcl_parameters; //Elena: See network.h for explanation of differenntt GRN models.
-
+    cerr<<"dlbcl pars: "<< par[dlbcl_parameters]<<endl;
      names[dlbcl_derivatives] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
        par[dlbcl_derivatives] = hypar.Value.dlbcl_derivatives; //Elena: See network.h for explanation of differenntt GRN models.
 

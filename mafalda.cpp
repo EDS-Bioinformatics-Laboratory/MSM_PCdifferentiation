@@ -630,6 +630,8 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                             //Number of pmhc dpendent divisions
                             Bcell->pMHC_dependent_number_of_divisions= p.par[pMHCdepMin] + (p.par[pMHCdepMax] - p.par[pMHCdepMin]) * ag_factor / (ag_factor + pow(p.par[pMHCdepK],p.par[pMHCdepHill]));
                             double ndivtmp = 2.0; //total number of divisions hyphasma temporary
+                            
+                            
                             if(Bcell->pMHC_dependent_number_of_divisions>=0)
                             {
                                 ndivtmp=Bcell->pMHC_dependent_number_of_divisions;

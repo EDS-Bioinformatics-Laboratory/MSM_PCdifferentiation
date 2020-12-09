@@ -19,10 +19,10 @@
 		AF6237832399114A008C76BA /* parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF62376523991149008C76BA /* parameters.cpp */; };
 		AF6237852399114A008C76BA /* mafalda.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF62376923991149008C76BA /* mafalda.cpp */; };
 		AF6237862399114A008C76BA /* random.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF62376C23991149008C76BA /* random.cpp */; };
-		AF6237872399114A008C76BA /* setparam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF62376F23991149008C76BA /* setparam.cpp */; };
 		AF6237882399114A008C76BA /* odesolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF6237722399114A008C76BA /* odesolver.cpp */; };
 		AF6237892399114A008C76BA /* cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF6237732399114A008C76BA /* cell.cpp */; };
 		AF62378A2399114A008C76BA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF6237792399114A008C76BA /* main.cpp */; };
+		AF86825E2556B1CC0077778C /* setparam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF86825D2556B1CC0077778C /* setparam.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +73,7 @@
 		AF6237772399114A008C76BA /* events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = events.h; sourceTree = "<group>"; };
 		AF6237782399114A008C76BA /* dynarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dynarray.h; path = ../../src/linkHyphasma/dynarray.h; sourceTree = "<group>"; };
 		AF6237792399114A008C76BA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		AF86825D2556B1CC0077778C /* setparam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = setparam.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +90,7 @@
 		AF623743239910CF008C76BA = {
 			isa = PBXGroup;
 			children = (
+				AF86825D2556B1CC0077778C /* setparam.cpp */,
 				AF62375E23991149008C76BA /* bcr.cpp */,
 				AF62376323991149008C76BA /* bcr.h */,
 				AF6237732399114A008C76BA /* cell.cpp */,
@@ -200,6 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF86825E2556B1CC0077778C /* setparam.cpp in Sources */,
 				AF6237822399114A008C76BA /* events.cpp in Sources */,
 				AF6237882399114A008C76BA /* odesolver.cpp in Sources */,
 				AF62378A2399114A008C76BA /* main.cpp in Sources */,
@@ -211,7 +214,6 @@
 				AF6237892399114A008C76BA /* cell.cpp in Sources */,
 				AF62377C2399114A008C76BA /* GC3D.cpp in Sources */,
 				AF6237832399114A008C76BA /* parameters.cpp in Sources */,
-				AF6237872399114A008C76BA /* setparam.cpp in Sources */,
 				AF6237802399114A008C76BA /* output.cpp in Sources */,
 				AF62377E2399114A008C76BA /* bcr.cpp in Sources */,
 				AF62377D2399114A008C76BA /* vector3d.cpp in Sources */,

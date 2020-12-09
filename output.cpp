@@ -88,8 +88,6 @@ void output::record_output_time_step(double currentTime, simulation &currentSim,
     Bcell_BLIMP1.add(Bcell->BLIMP1);
     Bcell_BCL6.add(Bcell->BCL6);
     Bcell_IRF4.add(Bcell->IRF4);
-    Bcell_nMut.add(Bcell->myBCR.nMutFromGermline);
-    Recycling_CC_nDiv.add(Bcell->Recycling_divisions); //Elena: lymphoma:
   }
 
   FILE *Bcell_time_data;
