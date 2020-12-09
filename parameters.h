@@ -117,6 +117,7 @@ enum {
     tolight ,
     testDelay ,
     typeCD40signal,
+    typePCdifferentiation,
 //W
     widthPI ,
 //Z

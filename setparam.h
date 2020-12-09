@@ -418,6 +418,7 @@ class Werte {
     double pIRF4;
     double pBCL6;
     double type_CD40_signal;
+    double type_PC_diff;
     double dlbcl_parameters;
     double dlbcl_derivatives;
 

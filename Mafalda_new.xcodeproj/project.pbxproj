@@ -63,7 +63,6 @@
 		AF62376C23991149008C76BA /* random.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = random.cpp; sourceTree = "<group>"; };
 		AF62376D23991149008C76BA /* odesolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = odesolver.h; sourceTree = "<group>"; };
 		AF62376E23991149008C76BA /* chemokines3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chemokines3d.h; sourceTree = "<group>"; };
-		AF62376F23991149008C76BA /* setparam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = setparam.cpp; path = ../../src/setparam.cpp; sourceTree = "<group>"; };
 		AF6237712399114A008C76BA /* trackball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trackball.h; sourceTree = "<group>"; };
 		AF6237722399114A008C76BA /* odesolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = odesolver.cpp; sourceTree = "<group>"; };
 		AF6237732399114A008C76BA /* cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cell.cpp; sourceTree = "<group>"; };
@@ -71,7 +70,6 @@
 		AF6237752399114A008C76BA /* mafalda.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mafalda.h; sourceTree = "<group>"; };
 		AF6237762399114A008C76BA /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = network.h; sourceTree = "<group>"; };
 		AF6237772399114A008C76BA /* events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = events.h; sourceTree = "<group>"; };
-		AF6237782399114A008C76BA /* dynarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dynarray.h; path = ../../src/linkHyphasma/dynarray.h; sourceTree = "<group>"; };
 		AF6237792399114A008C76BA /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		AF86825D2556B1CC0077778C /* setparam.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = setparam.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,7 +95,6 @@
 				AF62376B23991149008C76BA /* cell.h */,
 				AF62375623991149008C76BA /* chemokines3D.cpp */,
 				AF62376E23991149008C76BA /* chemokines3d.h */,
-				AF6237782399114A008C76BA /* dynarray.h */,
 				AF62376723991149008C76BA /* dynarray.h */,
 				AF62376423991149008C76BA /* events.cpp */,
 				AF6237772399114A008C76BA /* events.h */,
@@ -119,7 +116,6 @@
 				AF62376A23991149008C76BA /* parameters.h */,
 				AF62376C23991149008C76BA /* random.cpp */,
 				AF62375A23991149008C76BA /* random.h */,
-				AF62376F23991149008C76BA /* setparam.cpp */,
 				AF62376823991149008C76BA /* setparam.h */,
 				AF62375F23991149008C76BA /* trackball.cpp */,
 				AF6237712399114A008C76BA /* trackball.h */,

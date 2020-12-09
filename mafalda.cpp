@@ -788,72 +788,117 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                     {
                         if (random::randomDouble(1) < p.par[p_dif]) //recheck (there is another one, are they same?)
                         {
-//Elena: network:
-//                          Elena: events: network: 1- Uncomennt if output based on Iamhigh rule.
-//                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
-//                                                       {
-//                                                           Bcell->cell_type=Plasmacell;
-//                                                           Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-//                                                           EventOutput->recordEvent(Bcell, event_become_out, t);//Elena: events:  record history output at become output event.
-//                                                       }
-                        
-//                          Elena: events: network: 2- Uncomennt if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
-//                            if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
-//                            {
-//                             if(Bcell->BLIMP1 >= p.par[BLIMP1th])
-//                              {
-//                                Bcell->cell_type=Plasmacell;
-//                                Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-//                                EventOutput->recordEvent(Bcell, event_become_plasma, t);//Elena: events:  record history output at become output event.
-//                               }
-//                                else
-//                                {
-//                                     Bcell->cell_type=Memorycell;
-//                                     Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
-//                                     EventOutput->recordEvent(Bcell, event_become_memory, t);
-//                                }
-//                            }
-//Elena: network:
-                             //Elena: Plasma/Memory output: 3- Uncomennt if Plasma cell output based on network and Memory cell output based on IamAghigh rule.
-                            if ( Bcell->retained_Ag > 0.)
+                            if(p.par[typePCdifferentiation] == 0)
                             {
-                                if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: network parameter defined in parameterfile.
-                                {
-                                    Bcell->cell_type=Plasmacell;
-                                    Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
-                                    EventOutput->recordEvent(Bcell, event_become_plasma, t);
-                                }
-                               else
-                                {
-                                    if (Bcell->IamHighAg)
+//                              Elena: events: network: 1- Output based on Iamhigh rule.
+                                if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
+                                   {
+                                       Bcell->cell_type=Plasmacell;
+                                       Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+                                       EventOutput->recordEvent(Bcell, event_become_out, t);//Elena: events:  record history output at become output event.
+                                   }
+                                //centrocytes
+                                else
                                     {
-                                        Bcell->cell_type=Memorycell;
-                                        Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
-                                        EventOutput->recordEvent(Bcell, event_become_memory, t);
+                                        //CCs created here
+                                        Bcell->isResponsive2CXCL12=false;
+                                        Bcell->isResponsive2CXCL13=true;
+                                        Bcell->Selected_by_FDC=false;
+                                        Bcell->Selected_by_TC=false;
+                                        //#check @danial: in a scenario that Antigens remain inside the cell, take care of this
+                                        Bcell->nFDCcontacts=0;
+                                        Bcell->retained_Ag=0;
+                                        Bcell->clock =0 ; //not sure
+                                        Bcell->cell_type=Centrocyte;
+                                        Bcell->cell_state=unselected;
+                                        EventOutput->recordEvent(Bcell, event_unselected, t);//Elena: events:  record history output at become unselected event.
+
+                                    }
+                            }
+                            else if (p.par[typePCdifferentiation] == 1)
+                            {
+                                //Elena: Plasma/Memory output: 3- Plasma cell output based on network and Memory cell output based on IamAghigh rule.
+                                if ( Bcell->retained_Ag > 0.)
+                                {
+                                    if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: network parameter defined in parameterfile.
+                                    {
+                                        Bcell->cell_type=Plasmacell;
+                                        Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+                                        EventOutput->recordEvent(Bcell, event_become_plasma, t);
+                                    }
+                                   else
+                                    {
+                                        if (Bcell->IamHighAg)
+                                        {
+                                            Bcell->cell_type=Memorycell;
+                                            Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
+                                            EventOutput->recordEvent(Bcell, event_become_memory, t);
+                                        }
                                     }
                                 }
-                            }
 
-                            //centrocytes
-                                    else
-                                        {
-                                            //CCs created here
-                                            Bcell->isResponsive2CXCL12=false;
-                                            Bcell->isResponsive2CXCL13=true;
-                                            Bcell->Selected_by_FDC=false;
-                                            Bcell->Selected_by_TC=false;
-                                            //#check @danial: in a scenario that Antigens remain inside the cell, take care of this
-                                            Bcell->nFDCcontacts=0;
-                                            Bcell->retained_Ag=0;
-                                            Bcell->clock =0 ; //not sure
-                                            Bcell->cell_type=Centrocyte;
-                                            Bcell->cell_state=unselected;
-                                            EventOutput->recordEvent(Bcell, event_unselected, t);//Elena: events:  record history output at become unselected event.
+                                //centrocytes
+                                else
+                                {
+                                    //CCs created here
+                                    Bcell->isResponsive2CXCL12=false;
+                                    Bcell->isResponsive2CXCL13=true;
+                                    Bcell->Selected_by_FDC=false;
+                                    Bcell->Selected_by_TC=false;
+                                    //#check @danial: in a scenario that Antigens remain inside the cell, take care of this
+                                    Bcell->nFDCcontacts=0;
+                                    Bcell->retained_Ag=0;
+                                    Bcell->clock =0 ; //not sure
+                                    Bcell->cell_type=Centrocyte;
+                                    Bcell->cell_state=unselected;
+                                    EventOutput->recordEvent(Bcell, event_unselected, t);//Elena: events:  record history output at become unselected event.
 
-                                        }
                                 }
-                            
                             }
+                            else if (p.par[typePCdifferentiation] == 2)
+                            {
+                        
+//                          Elena: events: network: 2- Uncoment if output based on Iamhigh rule and Memory or plasma is based on BLIMP1.
+                                if ( Bcell->retained_Ag > 0. && Bcell->IamHighAg)
+                                {
+                                 if(Bcell->BLIMP1 >= p.par[BLIMP1th])
+                                  {
+                                    Bcell->cell_type=Plasmacell;
+                                    Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
+                                    EventOutput->recordEvent(Bcell, event_become_plasma, t);//Elena: events:  record history output at become output event.
+                                   }
+                                    else
+                                    {
+                                         Bcell->cell_type=Memorycell;
+                                         Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
+                                         EventOutput->recordEvent(Bcell, event_become_memory, t);
+                                    }
+                                }
+                                //centrocytes
+                                else
+                                    {
+                                        //CCs created here
+                                        Bcell->isResponsive2CXCL12=false;
+                                        Bcell->isResponsive2CXCL13=true;
+                                        Bcell->Selected_by_FDC=false;
+                                        Bcell->Selected_by_TC=false;
+                                        //#check @danial: in a scenario that Antigens remain inside the cell, take care of this
+                                        Bcell->nFDCcontacts=0;
+                                        Bcell->retained_Ag=0;
+                                        Bcell->clock =0 ; //not sure
+                                        Bcell->cell_type=Centrocyte;
+                                        Bcell->cell_state=unselected;
+                                        EventOutput->recordEvent(Bcell, event_unselected, t);//Elena: events:  record history output at become unselected event.
+
+                                    }
+                                }
+                            else
+                            {
+                                cerr<<"Error: typePCdifferentiation parameter out of range "<<endl;
+                            }
+                        }// close p.par[p_dif]
+                    }//close Bcell->cyclestate==cycle_G0
+                    
                     if ((Bcell->cell_type==Centroblast) && (Bcell->cyclestate!=cycle_M))
                         {
                             Bcell->move(p, l, redo_list);

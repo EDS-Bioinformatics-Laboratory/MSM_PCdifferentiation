@@ -101,7 +101,6 @@ public:
     void Resensitize2Chemokines(parameters& p, lattice& l);
     void getNewPolarity(parameters& p, lattice& l);
     bool IsCycling() ;
-
     string printBcell(); //#Recheck @danial: add all fields to it
 
     //Elena: network: initialize network (same equations for all cells)

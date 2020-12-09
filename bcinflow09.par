@@ -913,9 +913,11 @@ IRF4 polarity for B cell dividing Ag Asymmetrically [0-1]
 1
 BCL6 polarity for B cell dividing Ag Asymmetrically [0-1]
 1
-Type of CD40 signal model: 0-Fixed; 1-Affinnity
+Type of CD40 signal model: 0-Fixed; 1-Affinnity;
+1
+Type of PC differentiation model: 0-Ag dependent; 1-BLIMP1 dependent; 2-Output Ag dependent and PC phenotype BLIMP1 dependent;
 1
 dlbcl parameters (Helathy, M2, M8, M2M8)
 0
-dlbcl derivatives (Helathy, M1, M3A, M3B,,M4)
+dlbcl derivatives (Helathy, M1, M3A, M3B, M4)
 0

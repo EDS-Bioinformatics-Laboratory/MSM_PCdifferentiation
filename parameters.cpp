@@ -284,8 +284,11 @@ parameters::parameters() {
   par[tmax] = 504;
   names[tolight] = " Rate for differentiation of centroblasts to centrocytes ";
   par[tolight] = 0.1;  // in hours, #temporary, check hyphasma
-    names[typeCD40signal]="Decisionn to run Affinity (1) or Fixed (0) CD40 signal models";
+    names[typeCD40signal]="Decisionn to run Fixed (0) or Affinity (1) CD40 signal models";
     par[typeCD40signal]=1;
+    names[typePCdifferentiation]="Decisionn to run PC differentiation based on Ag (0) or BLIMP1 (1).";
+    par[typePCdifferentiation]=1;
+    
     
   // W
   par[widthPI] = 0.04;
@@ -506,10 +509,11 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
    
     names[dlbcl_parameters] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
        par[dlbcl_parameters] = hypar.Value.dlbcl_parameters; //Elena: See network.h for explanation of differenntt GRN models.
-    cerr<<"dlbcl pars: "<< par[dlbcl_parameters]<<endl;
+    
      names[dlbcl_derivatives] = " Type of GRN models: 0- Helthy; 1 to 3-DLBCL;";
-       par[dlbcl_derivatives] = hypar.Value.dlbcl_derivatives; //Elena: See network.h for explanation of differenntt GRN models.
-
+    par[dlbcl_derivatives] = hypar.Value.dlbcl_derivatives; //Elena: See network.h for explanation of differenntt GRN models.
+    
+       cerr<<"dlbcl pars: "<< par[dlbcl_parameters]<<"; dlbcl dervs: "<< par[dlbcl_derivatives] <<endl;
   // E
   names[expMin] = "Conversion of shape space affinity to (1/mol)";
   par[expMin] = hypar.Value.k_ic_exp_min;
@@ -701,8 +705,10 @@ void parameters::matchFromHyphasma(hyphasmaParameter &hypar) {
   names[tolight] = " Rate for differentiation of centroblasts to centrocytes ";
   par[tolight] = hypar.Value.tolight;
     
-    names[typeCD40signal]="Decision to run Affinity (1) or Fixed (0) CD40 signal models";
+    names[typeCD40signal]="Decisionn to run Fixed (0) or Affinity (1) CD40 signal models";
     par[typeCD40signal]=hypar.Value.type_CD40_signal;
+    names[typePCdifferentiation]="Decisionn to run PC differentiation based on Ag (0) or BLIMP1 (1).";
+    par[typePCdifferentiation]=hypar.Value.type_PC_diff;
 
   // W
   names[widthPI] = "    Coefficient of variation arround Polarity Index    ";

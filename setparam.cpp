@@ -2771,15 +2771,19 @@ const char* Werte::kenntext(int nummer) {
        }
          break;
        case 408: {
-         return "Type of CD40 signal model: 0-Fixed; 1-Affinnity";
+         return "Type of CD40 signal model: 0-Fixed; 1-Affinnity;";
        }
          break;
        case 409: {
-         return "dlbcl parameters (Helathy, M2, M8, M2M8)";
+         return "Type of PC differentiation model: 0-Ag dependent; 1-BLIMP1 dependent; 2-Output Ag dependent and PC phenotype BLIMP1 dependent;";
        }
          break;
        case 410: {
-         return "dlbcl derivatives (Helathy, M1, M3A, M3B,,M4)";
+         return "dlbcl parameters (Helathy, M2, M8, M2M8)";
+       }
+         break;
+       case 411: {
+         return "dlbcl derivatives (Helathy, M1, M3A, M3B, M4)";
        }
          break;
 
@@ -3246,8 +3250,9 @@ ofstream&Werte::fPut(ofstream &s) {
     s << kenntext(406) << ":\n" << pIRF4   << "\n";
     s << kenntext(407) << ":\n" << pBCL6 << "\n";
     s << kenntext(408) << ":\n" << type_CD40_signal << "\n";
-    s << kenntext(409) << ":\n" << dlbcl_parameters << "\n";
-    s << kenntext(410) << ":\n" << dlbcl_derivatives << "\n";
+    s << kenntext(409) << ":\n" << type_PC_diff << "\n";
+    s << kenntext(410) << ":\n" << dlbcl_parameters << "\n";
+    s << kenntext(411) << ":\n" << dlbcl_derivatives << "\n";
 
    s << kenntext(360) << ":\n" << multipleTFHcontacts << "\n";
    s << kenntext(233) << ":\n" << negativeTCselection << "\n";
@@ -4162,10 +4167,13 @@ void Werte::fGet(char * parname, bool transform2rate) {
       s >> type_CD40_signal;
     }
     if (fFind(parname, s, 409) == 1) {
-      s >> dlbcl_derivatives;
+      s >> type_PC_diff;
     }
     if (fFind(parname, s, 410) == 1) {
       s >> dlbcl_parameters;
+    }
+    if (fFind(parname, s, 411) == 1) {
+      s >> dlbcl_derivatives;
     }
     
     

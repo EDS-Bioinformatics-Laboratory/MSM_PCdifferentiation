@@ -150,13 +150,13 @@ int main(int argc, char** argv){
 ////    {
 ////    }
 ////    else {
-        parameters currentParameterSet;
-        currentParameterSet.convert_parameters();
-       currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
-        simulation Sim(currentParameterSet);
-//        Sim.Simulation_ID=Nof_simulations;
-//        initGC3D(argc, argv);
-        Sim.simulate(*Sim.currentLattice, currentParameterSet);
+//        parameters currentParameterSet;
+//        currentParameterSet.convert_parameters();
+//       currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
+//        simulation Sim(currentParameterSet);
+////        Sim.Simulation_ID=Nof_simulations;
+////        initGC3D(argc, argv);
+//        Sim.simulate(*Sim.currentLattice, currentParameterSet);
 ////    }
     
     // Print all parameters that is used to analyze file
@@ -165,14 +165,14 @@ int main(int argc, char** argv){
     //    {
     //    }
     //    else {
-//            parameters currentParameterSet(takeHyphasmaFile,parfname);
-//            currentParameterSet.convert_parameters();
-//           currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
-//            simulation Sim(currentParameterSet);
-//    //        Sim.Simulation_ID=Nof_simulations;
-//    //        initGC3D(argc, argv);
-//            Sim.simulate(*Sim.currentLattice, currentParameterSet);
-    //    }
+            parameters currentParameterSet(takeHyphasmaFile,parfname);
+            currentParameterSet.convert_parameters();
+           currentParameterSet.writeparameters(outputFolder+"/params.txt"); //Elena: Write parameters in output file since they might change per simulation.
+            simulation Sim(currentParameterSet);
+    //        Sim.Simulation_ID=Nof_simulations;
+    //        initGC3D(argc, argv);
+            Sim.simulate(*Sim.currentLattice, currentParameterSet);
+//        }
     
     cout << "Starting OpenGL " << endl;
     
