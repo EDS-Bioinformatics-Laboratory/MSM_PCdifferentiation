@@ -818,27 +818,21 @@ void simulation::Calc_BC(double t,parameters &p,lattice &l, vector<vector3D>&red
                             else if (p.par[typePCdifferentiation] == 1)
                             {
                                 //Elena: Plasma/Memory output: 3- Plasma cell output based on network and Memory cell output based on IamAghigh rule.
-                                if ( Bcell->retained_Ag > 0.)
-                                {
-                                    if(Bcell->BLIMP1 >= p.par[BLIMP1th]) //Elena: network parameter defined in parameterfile.
+                               
+                                    if(Bcell->BLIMP1 >= p.par[BLIMP1th] &&  Bcell->retained_Ag > 0.) //Elena: network parameter defined in parameterfile.
                                     {
                                         Bcell->cell_type=Plasmacell;
                                         Bcell->cell_state=Plasma_in_GC;//Elena: Change cell state. Important for output!
                                         EventOutput->recordEvent(Bcell, event_become_plasma, t);
                                     }
-                                   else
-                                    {
-                                        if (Bcell->IamHighAg)
+                                   else if (Bcell->IamHighAg &&  Bcell->retained_Ag > 0.)
                                         {
                                             Bcell->cell_type=Memorycell;
                                             Bcell->cell_state=Memory_in_GC;//Elena: Change cell state. Important for output!
                                             EventOutput->recordEvent(Bcell, event_become_memory, t);
                                         }
-                                    }
-                                }
-
                                 //centrocytes
-                                else
+                            else
                                 {
                                     //CCs created here
                                     Bcell->isResponsive2CXCL12=false;
