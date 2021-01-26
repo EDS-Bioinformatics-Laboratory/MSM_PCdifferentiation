@@ -5,7 +5,7 @@ This software accompanies the publication
 
 **Multiscale modelling of germinal center recapitulates the temporal switch from memory B cells to plasma cells differentiation controlled by antigen affinity-based Tfh cell help.**
 
-Elena Merino, Danial Lashgari, Rodrigo Garcia Valiente, Xuefeng Gao, Fabien Crauste, Philip A Robert, Michael Meyer-Hermann, Maria Rodriguez Martinez, Marieke van Ham, Jeroen E.J. Guikema, Huub Hoefsloot, Antoine H.C. van Kampen
+Elena Merino Tejero, Danial Lashgari, Rodrigo García-Valiente, Xuefeng Gao, Fabien Crauste, Philippe A. Robert, Michael Meyer-Hermann, María Rodríguez Martínez, S. Marieke van Ham, Jeroen E.J. Guikema, Huub Hoefsloot, Antoine H.C. van Kampen
 
 # Project
 ## MSM_PCdifferentiation
