@@ -16,7 +16,7 @@ The GRN is based on Martinez et al., 2012. It is posible to simulate 2 scenarios
 Ag inheritance or on BLIMP1 level.
 
 CD40 signal can be modeled 2 ways: Fixed CD40 (=50, 10) or CD40 dependent on affinity (=affinity*50). 
-The switch from one to the other has to be done inside the code (for now).
+The switch from one to the other can be done through parameter file bcinflow09.par. For further information on how to do this see running_specifications.pdf
 
 ## Software
 All software is written in C++
